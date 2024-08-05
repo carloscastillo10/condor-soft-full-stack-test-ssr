@@ -1,0 +1,20 @@
+{
+  "version": "0.2",
+  "language": "en,es",
+  "ignorePaths": [
+    ".gitignore",
+    "pnpm-lock.yaml"
+  ],
+  "words": [
+    "autenticación",
+    "autoincrement",
+    "CLIENTVAR",
+    "Condorsoft",
+    "CONDORSOFT",
+    "datasource",
+    "Gmail",
+    "postgresql",
+    "trpc",
+    "websockets"
+  ]
+}
