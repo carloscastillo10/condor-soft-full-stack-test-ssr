@@ -1,11 +1,15 @@
-import Head from "next/head";
-import Link from "next/link";
+import { type Metadata } from "next";
+import Login from "./api/auth/login";
+
+export const metadata: Metadata = {
+  title: "asasasas",
+};
 
 export default function Home() {
   return (
     <>
-      <Head>
-        <title>Condorsoft</title>
+      <Login />
+      {/* <Head>
         <meta name="description" content="Condorsoft technical test" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -27,7 +31,7 @@ export default function Home() {
             </Link>
           </div>
         </div>
-      </main>
+      </main> */}
     </>
   );
 }
