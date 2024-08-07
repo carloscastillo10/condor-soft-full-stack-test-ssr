@@ -1,5 +1,5 @@
 import { type Metadata } from "next";
-import Login from "./api/auth/login";
+import SignIn from "./api/auth/signin";
 
 export const metadata: Metadata = {
   title: "asasasas",
@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
-      <Login />
+      <SignIn />
       {/* <Head>
         <meta name="description" content="Condorsoft technical test" />
         <link rel="icon" href="/favicon.ico" />

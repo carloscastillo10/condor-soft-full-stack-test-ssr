@@ -13,15 +13,16 @@ const config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-sans)", ...fontFamily.sans],
+        sans: ["var(--font-inter)", ...fontFamily.sans],
       },
       colors: {
         primary: {
           DEFAULT: "#0F172A",
+          light: "#CBD5E1",
         },
       },
-      borderRadius: {
-        base: "6px",
+      gap: {
+        "1.25": "0.313rem",
       },
     },
   },

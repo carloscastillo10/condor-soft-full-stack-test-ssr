@@ -12,10 +12,33 @@ export const env = createEnv({
       .url()
       .refine(
         (str) => !str.includes("YOUR_POSTGRESQL_URL_HERE"),
-        "You forgot to change the default URL",
+        "You forgot to change the default DATABASE_URL",
       ),
-    GOOGLE_CLIENT_ID: z.string(),
-    GOOGLE_CLIENT_SECRET: z.string(),
+    NEXTAUTH_URL: z
+      .string()
+      .url()
+      .refine(
+        (str) => !str.includes("YOUR_NEXTAUTH_URL_HERE"),
+        "You forgot to change the default NEXTAUTH_URL",
+      ),
+    NEXTAUTH_SECRET: z
+      .string()
+      .refine(
+        (str) => !str.includes("YOUR_NEXTAUTH_SECRET_HERE"),
+        "You forgot to change the default NEXTAUTH_SECRET",
+      ),
+    GOOGLE_CLIENT_ID: z
+      .string()
+      .refine(
+        (str) => !str.includes("YOUR_GOOGLE_CLIENT_ID_HERE"),
+        "You forgot to change the default GOOGLE_CLIENT_ID",
+      ),
+    GOOGLE_CLIENT_SECRET: z
+      .string()
+      .refine(
+        (str) => !str.includes("YOUR_GOOGLE_CLIENT_SECRET_HERE"),
+        "You forgot to change the default GOOGLE_CLIENT_SECRET",
+      ),
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
@@ -36,6 +59,8 @@ export const env = createEnv({
    */
   runtimeEnv: {
     DATABASE_URL: process.env.DATABASE_URL,
+    NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
     NODE_ENV: process.env.NODE_ENV,
