@@ -1,6 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn, useSession } from "next-auth/react";
-import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { Button } from "~/modules/core/components/ui/button";
@@ -35,6 +34,8 @@ const SignInForm = ({ ...props }: SignInFormProps) => {
       password: data.password,
     });
 
+    console.log(data);
+
     console.log(response);
   };
 
@@ -42,7 +43,11 @@ const SignInForm = ({ ...props }: SignInFormProps) => {
 
   return (
     <Form {...form}>
-      <form className="grid gap-4" onSubmit={form.handleSubmit(onSubmit)}>
+      <form
+        className="grid gap-4"
+        onSubmit={form.handleSubmit(onSubmit)}
+        {...props}
+      >
         <Button
           className="rounded-md"
           type="button"
@@ -123,17 +128,6 @@ const SignInForm = ({ ...props }: SignInFormProps) => {
         >
           Log In
         </Button>
-        <div className="gap-1.25 flex flex-col items-center">
-          <p className="text-base font-normal">
-            {"Don't have an account yet?"}
-          </p>
-          <Link
-            className="transform text-base font-medium hover:underline"
-            href="/auth/signup"
-          >
-            Create Account
-          </Link>
-        </div>
       </form>
     </Form>
   );

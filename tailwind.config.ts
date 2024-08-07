@@ -24,6 +24,19 @@ const config = {
       gap: {
         "1.25": "0.313rem",
       },
+      animation: {
+        form: "0.25s forwards swipe-right ease-out",
+      },
+      keyframes: {
+        "swipe-left": {
+          "0%": { transform: "translateX(-24px)", opacity: ".5" },
+          "100%": { transform: "translateX(0)", opacity: "1" },
+        },
+        "swipe-right": {
+          "0%": { transform: "translateX(24px)", opacity: ".5" },
+          "100%": { transform: "translateX(0)", opacity: "1" },
+        },
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
