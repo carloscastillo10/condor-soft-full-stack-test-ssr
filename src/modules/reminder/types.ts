@@ -1,4 +1,6 @@
-export interface CalendarDate {
+import { type createDate } from "./utils/calendar";
+
+export interface ReminderCalendarDate {
   date: Date;
   seconds: number;
   minutes: number;
@@ -52,9 +54,9 @@ export interface Month {
 }
 
 export interface WeekDayName {
-  day: string;
+  day: ReturnType<typeof createDate>["day"];
   dayNumberInWeek: number;
   dayShort: string;
 }
 
-export type CalendarDirection = "today" | "left" | "right" | "custom";
+export type ReminderCalendarDirection = "today" | "left" | "right" | "custom";

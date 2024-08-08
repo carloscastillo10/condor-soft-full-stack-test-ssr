@@ -1,6 +1,6 @@
-import { type CalendarDate, type WeekDayName } from "../types";
+import { type ReminderCalendarDate, type WeekDayName } from "../types";
 
-const createDate = (date: Date, locale: string): CalendarDate => {
+const createDate = (date: Date, locale: string): ReminderCalendarDate => {
   const seconds = date.getSeconds();
   const minutes = date.getMinutes();
   const hours = date.getHours();
@@ -40,7 +40,7 @@ const getDay = (
   monthIndex: number,
   dayNumber: number,
   locale: string,
-): CalendarDate => {
+): ReminderCalendarDate => {
   const date = new Date(year, monthIndex, dayNumber);
   const calendarDay = createDate(date, locale);
 
@@ -115,6 +115,80 @@ const getWeekDaysNames = (
     ...sortedWeekDaysNames.slice(0, firstWeekDay - 1),
   ];
 };
+
+const generateDaysRange = (
+  year: number,
+  monthIndex: number,
+  dayFrom: number,
+  countDays: number,
+  locale: string,
+): ReminderCalendarDate[] => {
+  const days = Array(countDays)
+    .fill(dayFrom)
+    .map((_, index) => getDay(year, monthIndex, dayFrom + index, locale));
+
+  return days;
+};
+
+const getCalendarDaysOfMonth = (
+  year: number,
+  monthIndex: number,
+  firstWeekDayNumber: number,
+  numberOfWeekDays: number,
+  locale: string,
+  totalDays?: number,
+): ReminderCalendarDate[] => {
+  const days = createMonth(
+    new Date(year, monthIndex),
+    locale,
+  ).createMonthDays();
+  const monthNumberOfDays = getMonthNumberOfDays(year, monthIndex);
+  const firstDay = days[0]!;
+  const lastDay = days[monthNumberOfDays - 1]!;
+  const shiftIndex = firstWeekDayNumber - 1;
+
+  const numberOfPreviousDays =
+    firstDay.dayNumberInWeek - 1 - shiftIndex < 0
+      ? numberOfWeekDays - (firstWeekDayNumber - firstDay.dayNumberInWeek)
+      : firstDay.dayNumberInWeek - 1 - shiftIndex;
+
+  const numberOfNextDays =
+    numberOfWeekDays - lastDay.dayNumberInWeek + shiftIndex > 6
+      ? numberOfWeekDays -
+        lastDay.dayNumberInWeek -
+        (numberOfWeekDays - shiftIndex)
+      : numberOfWeekDays - lastDay.dayNumberInWeek + shiftIndex;
+
+  const totalCalendarDays =
+    days.length + numberOfPreviousDays + numberOfNextDays;
+  const numberRestDays =
+    totalDays !== undefined ? totalDays - totalCalendarDays : 0;
+
+  const daysFromPreviousMonth = generateDaysRange(
+    firstDay.year,
+    firstDay.monthIndex,
+    firstDay.dayNumber - numberOfPreviousDays,
+    numberOfPreviousDays,
+    locale,
+  );
+  const daysFromNextMonth = generateDaysRange(
+    lastDay.year,
+    lastDay.monthIndex,
+    lastDay.dayNumber + 1,
+    numberOfNextDays + numberRestDays,
+    locale,
+  );
+
+  const calendarDaysOfMonth = Array.prototype.concat(
+    ...daysFromPreviousMonth,
+    ...days,
+    ...daysFromNextMonth,
+  ) as ReminderCalendarDate[];
+
+  return calendarDaysOfMonth;
+};
+
+export { getCalendarDaysOfMonth };
 
 const checkDateIsEqual = (date1: Date, date2: Date): boolean => {
   const isCurrentYear = date1.getFullYear() === date2.getFullYear();

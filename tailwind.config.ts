@@ -20,6 +20,9 @@ const config = {
           DEFAULT: "#0F172A",
           light: "#CBD5E1",
         },
+        secondary: {
+          DEFAULT: "#616161",
+        },
       },
       gap: {
         "1.25": "0.313rem",

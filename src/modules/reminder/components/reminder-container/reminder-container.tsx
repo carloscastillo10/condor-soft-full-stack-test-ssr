@@ -26,7 +26,7 @@ const ReminderContainer = ({ ...props }: ReminderContainerProps) => {
 
   return (
     <Card
-      className="grid w-full max-w-full gap-4 rounded-md border border-primary-light p-6"
+      className="flex h-full w-full max-w-full flex-col gap-4 rounded-md border border-primary-light p-6"
       {...props}
     >
       <CardHeader className="p-0">
@@ -50,7 +50,7 @@ const ReminderContainer = ({ ...props }: ReminderContainerProps) => {
           </DropdownMenu>
         </div>
       </CardHeader>
-      <CardContent className="p-0">
+      <CardContent className="h-full p-0">
         <ReminderCalendar />
       </CardContent>
     </Card>
