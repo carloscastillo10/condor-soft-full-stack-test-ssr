@@ -198,4 +198,16 @@ const checkDateIsEqual = (date1: Date, date2: Date): boolean => {
   return isCurrentYear && isCurrentMonth && isCurrentDay;
 };
 
-export { checkDateIsEqual, createDate, createMonth, getWeekDaysNames };
+const checkIsToday = (date: Date): boolean => {
+  const today = new Date();
+
+  return checkDateIsEqual(today, date);
+};
+
+export {
+  checkDateIsEqual,
+  checkIsToday,
+  createDate,
+  createMonth,
+  getWeekDaysNames,
+};

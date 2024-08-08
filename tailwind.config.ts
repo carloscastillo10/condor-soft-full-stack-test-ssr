@@ -15,6 +15,16 @@ const config = {
       fontFamily: {
         sans: ["var(--font-inter)", ...fontFamily.sans],
       },
+      container: {
+        screens: {
+          sm: "540px",
+          md: "720px",
+          lg: "1024px",
+          xl: "1180px",
+          "2xl": "1536px",
+          default: "100%",
+        },
+      },
       colors: {
         primary: {
           DEFAULT: "#0F172A",
@@ -29,6 +39,8 @@ const config = {
       },
       animation: {
         form: "0.25s forwards swipe-right ease-out",
+        "transition-left": "0.2s forwards swipe-left ease",
+        "transition-right": "0.2s forwards swipe-right ease",
       },
       keyframes: {
         "swipe-left": {

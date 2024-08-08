@@ -26,14 +26,14 @@ const ReminderContainer = ({ ...props }: ReminderContainerProps) => {
 
   return (
     <Card
-      className="flex h-full w-full max-w-full flex-col gap-4 rounded-md border border-primary-light p-6"
+      className="container flex h-full w-full flex-col gap-4 rounded-md border border-primary-light p-6"
       {...props}
     >
       <CardHeader className="p-0">
         <div className="flex items-center justify-between">
           <CardTitle className="text-3xl font-semibold">Schedule</CardTitle>
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
+            <DropdownMenuTrigger className="cursor-pointer" asChild>
               <Avatar className="h-12 w-12">
                 <AvatarImage
                   src="https://github.com/shadcn.png"

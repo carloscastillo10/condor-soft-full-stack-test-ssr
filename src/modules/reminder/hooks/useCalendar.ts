@@ -25,9 +25,14 @@ const useCalendar = ({
 }) => {
   const [direction, setDirection] =
     useState<ReminderCalendarDirection>("today");
+
   const [selectedDay, setSelectedDay] = useState<ReminderCalendarDate>(
     createDate(date, locale),
   );
+
+  const [lastSelectedDay, setLastSelectedDay] =
+    useState<ReminderCalendarDate>(selectedDay);
+
   const [selectedMonth, setSelectedMonth] = useState<Month>(
     createMonth(new Date(selectedDay.year, selectedDay.monthIndex), locale),
   );
@@ -66,7 +71,10 @@ const useCalendar = ({
 
     !isCurrentMonth && setSelectedMonth(createMonth(date, locale));
     !checkDateIsEqual(date, selectedDay.date) &&
-      setSelectedDay(createDate(date, locale));
+      setSelectedDay((previousDate) => {
+        setLastSelectedDay(previousDate);
+        return createDate(date, locale);
+      });
   };
 
   const onChangeDirection = (
@@ -89,6 +97,7 @@ const useCalendar = ({
     state: {
       direction,
       selectedDay,
+      lastSelectedDay,
       selectedMonth,
       displayedDate,
       weekDaysNames,

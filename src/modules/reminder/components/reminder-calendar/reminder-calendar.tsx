@@ -17,6 +17,9 @@ const ReminderCalendar = ({ ...props }: ReminderCalendarProps) => {
         onChangeDirection={functions.onChangeDirection}
       />
       <ReminderCalendarMonth
+        direction={state.direction}
+        selectedDay={state.selectedDay}
+        lastSelectedDay={state.lastSelectedDay}
         selectedMonth={state.selectedMonth}
         weekDaysNames={state.weekDaysNames}
         daysOfMonth={state.daysOfMonth}
