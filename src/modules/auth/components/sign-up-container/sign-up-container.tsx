@@ -18,12 +18,12 @@ import { type SignUpContainerProps } from "./types";
 
 const SignUpContainer = ({ ...props }: SignUpContainerProps) => (
   <Card
-    className="border-card grid w-full max-w-full gap-2.5 rounded-md border-primary-light px-6 py-8 md:max-w-md"
+    className="grid w-full max-w-full gap-2.5 rounded-md border border-primary-light px-6 py-8 md:max-w-md"
     {...props}
   >
     <div className="animate-form grid gap-4">
       <CardHeader className="gap-1.5 p-0">
-        <CardTitle className=" flex items-center gap-2 text-3xl">
+        <CardTitle className="flex items-center gap-2 text-3xl">
           <TooltipProvider delayDuration={0}>
             <Tooltip>
               <TooltipTrigger asChild>

@@ -12,7 +12,7 @@ import { type SignInContainerProps } from "./types";
 
 const SignInContainer = ({ ...props }: SignInContainerProps) => (
   <Card
-    className="border-card grid w-full max-w-full gap-2.5 rounded-md border-primary-light px-6 py-8 md:max-w-md"
+    className="grid w-full max-w-full gap-2.5 rounded-md border border-primary-light px-6 py-8 md:max-w-md"
     {...props}
   >
     <div className="grid gap-4">
