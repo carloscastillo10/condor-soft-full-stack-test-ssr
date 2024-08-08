@@ -8,11 +8,17 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "~/modules/core/components/ui/avatar";
-import { Card, CardHeader, CardTitle } from "~/modules/core/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "~/modules/core/components/ui/card";
 import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "~/modules/core/components/ui/dropdown-menu";
+import { ReminderCalendar } from "../reminder-calendar";
 import { type ReminderContainerProps } from "./types";
 
 const ReminderContainer = ({ ...props }: ReminderContainerProps) => {
@@ -24,26 +30,29 @@ const ReminderContainer = ({ ...props }: ReminderContainerProps) => {
       {...props}
     >
       <CardHeader className="p-0">
-        <div className="flex justify-between">
+        <div className="flex items-center justify-between">
           <CardTitle className="text-3xl font-semibold">Schedule</CardTitle>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Avatar>
+              <Avatar className="h-12 w-12">
                 <AvatarImage
                   src="https://github.com/shadcn.png"
-                  alt={session?.user?.name}
+                  alt={session?.user?.name ?? "user avatar"}
                 />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuItem className="text-sm font-semibold">
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem className="cursor-pointer text-sm font-semibold hover:bg-slate-100">
                 Log out
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
       </CardHeader>
+      <CardContent className="p-0">
+        <ReminderCalendar />
+      </CardContent>
     </Card>
   );
 };
