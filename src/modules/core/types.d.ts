@@ -4,3 +4,7 @@ export interface User {
   lastName: string;
   email: string;
 }
+
+export type ErrorResponse = {
+  message: string;
+};

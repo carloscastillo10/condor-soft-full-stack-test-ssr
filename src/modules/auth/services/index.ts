@@ -1,11 +1,32 @@
 import bcrypt from "bcrypt";
 import { type User } from "~/modules/core/types";
 import { db } from "~/server/db";
+import { type CreateUser } from "../types";
 
 const findUserByEmail = async (email?: string) => {
   const userFound = await db.user.findUnique({ where: { email } });
 
   return userFound;
+};
+
+const createUser = async (data: CreateUser): Promise<User> => {
+  const userFound = await findUserByEmail(data.email);
+
+  if (userFound) {
+    throw new Error("Email already exists");
+  }
+
+  const hashedPassword = await bcrypt.hash(data.password, 10);
+  const { id, name, lastName, email } = await db.user.create({
+    data: { ...data, password: hashedPassword },
+  });
+
+  return {
+    id: id.toString(),
+    name,
+    lastName,
+    email,
+  };
 };
 
 const login = async ({
@@ -37,4 +58,4 @@ const login = async ({
   };
 };
 
-export { findUserByEmail, login };
+export { createUser, findUserByEmail, login };

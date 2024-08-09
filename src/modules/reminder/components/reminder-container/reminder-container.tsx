@@ -2,7 +2,8 @@ import {
   DropdownMenu,
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import {
   Avatar,
   AvatarFallback,
@@ -22,7 +23,13 @@ import { ReminderCalendar } from "../reminder-calendar";
 import { type ReminderContainerProps } from "./types";
 
 const ReminderContainer = ({ ...props }: ReminderContainerProps) => {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
+  const router = useRouter();
+
+  const onSignOut = async () => {
+    await signOut({ redirect: false, callbackUrl: "/auth/signin" });
+    router.push("/auth/signin");
+  };
 
   return (
     <Card
@@ -39,11 +46,16 @@ const ReminderContainer = ({ ...props }: ReminderContainerProps) => {
                   src="https://github.com/shadcn.png"
                   alt={session?.user?.name ?? "user avatar"}
                 />
-                <AvatarFallback>CN</AvatarFallback>
+                <AvatarFallback>
+                  {session?.user?.name?.charAt(0).toUpperCase()}
+                </AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem className="cursor-pointer text-sm font-semibold hover:bg-slate-100">
+              <DropdownMenuItem
+                className="cursor-pointer text-sm font-semibold hover:bg-slate-100"
+                onClick={onSignOut}
+              >
                 Log out
               </DropdownMenuItem>
             </DropdownMenuContent>

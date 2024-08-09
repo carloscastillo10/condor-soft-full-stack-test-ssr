@@ -1,6 +1,10 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
+import { AlertError } from "~/modules/core/components/alert-error";
 import { Button } from "~/modules/core/components/ui/button";
 import {
   Form,
@@ -12,6 +16,7 @@ import {
 } from "~/modules/core/components/ui/form";
 import { Input } from "~/modules/core/components/ui/input";
 import { cn } from "~/modules/core/lib/utils";
+import { type ErrorResponse } from "~/modules/core/types";
 import { signUpSchema } from "../../utils/validation";
 import styles from "./styles.module.css";
 import { type SignUpFormData, type SignUpFormProps } from "./types";
@@ -27,9 +32,32 @@ const SignUpForm = ({ ...props }: SignUpFormProps) => {
     },
     resolver: zodResolver(signUpSchema),
   });
+  const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
 
-  const onSubmit = (data: SignUpFormData) => {
-    console.log(data);
+  const onSubmit = async (data: SignUpFormData) => {
+    try {
+      const response = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ...data }),
+      });
+
+      if (response.ok) {
+        await signIn("credentials", {
+          email: data.email,
+          password: data.password,
+          redirect: false,
+        });
+
+        router.push("/");
+      } else {
+        const { message } = (await response.json()) as ErrorResponse;
+        setError(message);
+      }
+    } catch (error) {}
   };
 
   return (
@@ -46,6 +74,7 @@ const SignUpForm = ({ ...props }: SignUpFormProps) => {
         <hr
           className={`${styles.divider} mb-2 mt-4 overflow-visible bg-primary-light text-center`}
         />
+        {error && <AlertError errorMessage={error} />}
         <div className="grid grid-cols-2 gap-4">
           <FormField
             control={form.control}

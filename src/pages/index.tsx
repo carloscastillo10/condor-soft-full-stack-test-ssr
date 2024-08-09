@@ -1,9 +1,12 @@
-import SignUp from "./auth/signup";
+import { Layout } from "~/modules/core/components/layout";
+import { ReminderSection } from "~/modules/reminder/components/reminder-section";
 
 export default function Home() {
   return (
     <>
-      <SignUp />
+      <Layout title="Reminder - Condorsoft">
+        <ReminderSection />
+      </Layout>
       {/* <Reminder /> */}
       {/* <SignIn /> */}
       {/* <Head>

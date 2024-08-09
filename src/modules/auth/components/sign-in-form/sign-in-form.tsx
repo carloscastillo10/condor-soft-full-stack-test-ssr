@@ -4,8 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
-import { GoAlertFill } from "react-icons/go";
-import { Alert, AlertTitle } from "~/modules/core/components/ui/alert";
+import { AlertError } from "~/modules/core/components/alert-error";
 import { Button } from "~/modules/core/components/ui/button";
 import {
   Form,
@@ -42,11 +41,9 @@ const SignInForm = ({ ...props }: SignInFormProps) => {
     if (response?.error) {
       setError(response.error);
     } else {
-      router.push("/reminder");
+      router.push("/");
     }
   };
-
-  // console.log(session);
 
   return (
     <Form {...form}>
@@ -67,14 +64,7 @@ const SignInForm = ({ ...props }: SignInFormProps) => {
         <hr
           className={`${styles.divider} mb-2 mt-4 overflow-visible bg-primary-light text-center`}
         />
-        {error && (
-          <Alert className="bg-red-500 text-white">
-            <GoAlertFill className="h-5 w-5 fill-white" />
-            <AlertTitle className="mb-0 font-medium leading-normal">
-              {error}
-            </AlertTitle>
-          </Alert>
-        )}
+        {error && <AlertError errorMessage={error} />}
         <FormField
           control={form.control}
           name="email"

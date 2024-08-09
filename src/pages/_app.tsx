@@ -9,7 +9,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
       <Component {...pageProps} />
       <ProgressBar
         height="4px"
-        color="#0F172A"
+        color="#FFF"
         shallowRouting
         options={{ showSpinner: false }}
       />
