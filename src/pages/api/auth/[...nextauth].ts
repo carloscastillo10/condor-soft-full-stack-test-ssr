@@ -44,13 +44,6 @@ const authOptions: AuthOptions = {
 
       return session;
     },
-    async redirect({ url, baseUrl }) {
-      if (url === baseUrl) {
-        return baseUrl;
-      }
-
-      return url;
-    },
   },
   pages: {
     signIn: "/auth/signin",

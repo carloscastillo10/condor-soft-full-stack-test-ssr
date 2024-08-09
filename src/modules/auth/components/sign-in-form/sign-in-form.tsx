@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
+import { LuLoader2 } from "react-icons/lu";
 import { AlertError } from "~/modules/core/components/alert-error";
 import { Button } from "~/modules/core/components/ui/button";
 import {
@@ -29,19 +30,29 @@ const SignInForm = ({ ...props }: SignInFormProps) => {
     resolver: zodResolver(signInSchema),
   });
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   const onSubmit = async (data: SignInFormData) => {
-    const response = await signIn("credentials", {
-      email: data.email,
-      password: data.password,
-      redirect: false,
-    });
+    try {
+      setIsLoading(true);
+      const response = await signIn("credentials", {
+        email: data.email,
+        password: data.password,
+        redirect: false,
+      });
 
-    if (response?.error) {
-      setError(response.error);
-    } else {
-      router.push("/");
+      if (response?.error) {
+        setError(response.error);
+      } else {
+        router.push("/");
+      }
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Something went wrong";
+      setError(errorMessage);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -130,8 +141,13 @@ const SignInForm = ({ ...props }: SignInFormProps) => {
         <Button
           className="rounded-md bg-primary px-4 py-2 text-sm font-medium"
           type="submit"
+          disabled={isLoading}
         >
-          Log In
+          {isLoading ? (
+            <LuLoader2 className="h-6 w-6 animate-spin" />
+          ) : (
+            "Log In"
+          )}
         </Button>
       </form>
     </Form>

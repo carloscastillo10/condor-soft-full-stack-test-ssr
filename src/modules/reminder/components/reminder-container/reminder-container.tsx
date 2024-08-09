@@ -27,7 +27,7 @@ const ReminderContainer = ({ ...props }: ReminderContainerProps) => {
   const router = useRouter();
 
   const onSignOut = async () => {
-    await signOut({ redirect: false, callbackUrl: "/auth/signin" });
+    await signOut({ redirect: false });
     router.push("/auth/signin");
   };
 
