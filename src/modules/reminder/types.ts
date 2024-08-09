@@ -1,5 +1,3 @@
-import { type createDate } from "./utils/calendar";
-
 export interface ReminderCalendarDate {
   date: Date;
   seconds: number;
@@ -54,9 +52,14 @@ export interface Month {
 }
 
 export interface WeekDayName {
-  day: ReturnType<typeof createDate>["day"];
+  day: string;
   dayNumberInWeek: number;
   dayShort: string;
+}
+
+export interface ModalPosition {
+  top: number;
+  left: number;
 }
 
 export type ReminderCalendarDirection = "today" | "left" | "right" | "custom";

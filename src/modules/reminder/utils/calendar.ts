@@ -173,17 +173,17 @@ const getCalendarDaysOfMonth = (
   );
   const daysFromNextMonth = generateDaysRange(
     lastDay.year,
-    lastDay.monthIndex,
-    lastDay.dayNumber + 1,
+    lastDay.monthIndex + 1,
+    1,
     numberOfNextDays + numberRestDays,
     locale,
   );
 
-  const calendarDaysOfMonth = Array.prototype.concat(
+  const calendarDaysOfMonth: ReminderCalendarDate[] = [
     ...daysFromPreviousMonth,
     ...days,
     ...daysFromNextMonth,
-  ) as ReminderCalendarDate[];
+  ];
 
   return calendarDaysOfMonth;
 };
