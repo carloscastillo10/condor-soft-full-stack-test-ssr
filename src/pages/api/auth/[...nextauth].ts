@@ -3,6 +3,7 @@ import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import { env } from "~/env";
+import { login } from "~/modules/auth/services";
 
 const authOptions: AuthOptions = {
   providers: [
@@ -13,7 +14,14 @@ const authOptions: AuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        console.log(credentials);
+        if (credentials) {
+          const user = await login({
+            email: credentials?.email,
+            password: credentials?.password,
+          });
+
+          return user;
+        }
 
         return null;
       },

@@ -1,7 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
+import { GoAlertFill } from "react-icons/go";
+import { Alert, AlertTitle } from "~/modules/core/components/ui/alert";
 import { Button } from "~/modules/core/components/ui/button";
 import {
   Form,
@@ -18,7 +22,6 @@ import styles from "./styles.module.css";
 import { type SignInFormData, type SignInFormProps } from "./types";
 
 const SignInForm = ({ ...props }: SignInFormProps) => {
-  const { data: session, status } = useSession();
   const form = useForm<SignInFormData>({
     defaultValues: {
       email: "",
@@ -26,17 +29,21 @@ const SignInForm = ({ ...props }: SignInFormProps) => {
     },
     resolver: zodResolver(signInSchema),
   });
+  const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
 
   const onSubmit = async (data: SignInFormData) => {
     const response = await signIn("credentials", {
-      redirect: false,
       email: data.email,
       password: data.password,
+      redirect: false,
     });
 
-    console.log(data);
-
-    console.log(response);
+    if (response?.error) {
+      setError(response.error);
+    } else {
+      router.push("/reminder");
+    }
   };
 
   // console.log(session);
@@ -60,6 +67,14 @@ const SignInForm = ({ ...props }: SignInFormProps) => {
         <hr
           className={`${styles.divider} mb-2 mt-4 overflow-visible bg-primary-light text-center`}
         />
+        {error && (
+          <Alert className="bg-red-500 text-white">
+            <GoAlertFill className="h-5 w-5 fill-white" />
+            <AlertTitle className="mb-0 font-medium leading-normal">
+              {error}
+            </AlertTitle>
+          </Alert>
+        )}
         <FormField
           control={form.control}
           name="email"

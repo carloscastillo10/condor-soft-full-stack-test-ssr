@@ -1,14 +1,10 @@
-import { type Metadata } from "next";
-import Reminder from "./reminder";
-
-export const metadata: Metadata = {
-  title: "asasasas",
-};
+import SignUp from "./auth/signup";
 
 export default function Home() {
   return (
     <>
-      <Reminder />
+      <SignUp />
+      {/* <Reminder /> */}
       {/* <SignIn /> */}
       {/* <Head>
         <meta name="description" content="Condorsoft technical test" />
