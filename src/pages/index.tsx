@@ -1,11 +1,15 @@
-import Head from "next/head";
-import Link from "next/link";
+import { Layout } from "~/modules/core/components/layout";
+import { ReminderSection } from "~/modules/reminder/components/reminder-section";
 
 export default function Home() {
   return (
     <>
-      <Head>
-        <title>Condorsoft</title>
+      <Layout title="Reminder - Condorsoft">
+        <ReminderSection />
+      </Layout>
+      {/* <Reminder /> */}
+      {/* <SignIn /> */}
+      {/* <Head>
         <meta name="description" content="Condorsoft technical test" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -27,7 +31,7 @@ export default function Home() {
             </Link>
           </div>
         </div>
-      </main>
+      </main> */}
     </>
   );
 }

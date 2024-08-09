@@ -1,0 +1,10 @@
+.divider::after {
+  content: "or sign in with email";
+  display: inline-block;
+  position: relative;
+  background: #fff;
+  padding: 0 16px;
+  top: -12px;
+  font-size: 14px;
+  color: #6e6d7a;
+}

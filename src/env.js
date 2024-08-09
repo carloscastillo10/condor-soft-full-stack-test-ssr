@@ -11,8 +11,33 @@ export const env = createEnv({
       .string()
       .url()
       .refine(
-        (str) => !str.includes("YOUR_MYSQL_URL_HERE"),
-        "You forgot to change the default URL"
+        (str) => !str.includes("YOUR_POSTGRESQL_URL_HERE"),
+        "You forgot to change the default DATABASE_URL",
+      ),
+    NEXTAUTH_URL: z
+      .string()
+      .url()
+      .refine(
+        (str) => !str.includes("YOUR_NEXTAUTH_URL_HERE"),
+        "You forgot to change the default NEXTAUTH_URL",
+      ),
+    NEXTAUTH_SECRET: z
+      .string()
+      .refine(
+        (str) => !str.includes("YOUR_NEXTAUTH_SECRET_HERE"),
+        "You forgot to change the default NEXTAUTH_SECRET",
+      ),
+    GOOGLE_CLIENT_ID: z
+      .string()
+      .refine(
+        (str) => !str.includes("YOUR_GOOGLE_CLIENT_ID_HERE"),
+        "You forgot to change the default GOOGLE_CLIENT_ID",
+      ),
+    GOOGLE_CLIENT_SECRET: z
+      .string()
+      .refine(
+        (str) => !str.includes("YOUR_GOOGLE_CLIENT_SECRET_HERE"),
+        "You forgot to change the default GOOGLE_CLIENT_SECRET",
       ),
     NODE_ENV: z
       .enum(["development", "test", "production"])
@@ -29,11 +54,15 @@ export const env = createEnv({
   },
 
   /**
-   * You can't destruct `process.env` as a regular object in the Next.js edge runtimes (e.g.
+   * You can't destruct `process.env` as a regular object in the Next.js edge runtime (e.g.
    * middlewares) or client-side so we need to destruct manually.
    */
   runtimeEnv: {
     DATABASE_URL: process.env.DATABASE_URL,
+    NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
+    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+    GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
     NODE_ENV: process.env.NODE_ENV,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },

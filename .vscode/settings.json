@@ -1,6 +1,8 @@
 {
   "conventionalCommits.scopes": [
     "skeleton",
-    "ci-cd"
+    "ci-cd",
+    "auth",
+    "reminder"
   ]
 }
