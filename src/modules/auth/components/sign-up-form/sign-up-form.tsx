@@ -1,9 +1,5 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
+import { LuLoader2 } from "react-icons/lu";
 import { AlertError } from "~/modules/core/components/alert-error";
 import { Button } from "~/modules/core/components/ui/button";
 import {
@@ -16,48 +12,16 @@ import {
 } from "~/modules/core/components/ui/form";
 import { Input } from "~/modules/core/components/ui/input";
 import { cn } from "~/modules/core/lib/utils";
-import { type ErrorResponse } from "~/modules/core/types";
-import { signUpSchema } from "../../utils/validation";
+import { useSignUp } from "../../hooks/useSignUp";
+import { type SignUpFormData } from "../../types";
 import styles from "./styles.module.css";
-import { type SignUpFormData, type SignUpFormProps } from "./types";
+import { type SignUpFormProps } from "./types";
 
 const SignUpForm = ({ ...props }: SignUpFormProps) => {
-  const form = useForm<SignUpFormData>({
-    defaultValues: {
-      name: "",
-      lastName: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    },
-    resolver: zodResolver(signUpSchema),
-  });
-  const router = useRouter();
-  const [error, setError] = useState<string | null>(null);
+  const { form, isLoading, error, signUp } = useSignUp();
 
-  const onSubmit = async (data: SignUpFormData) => {
-    try {
-      const response = await fetch("/api/auth/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ...data }),
-      });
-
-      if (response.ok) {
-        await signIn("credentials", {
-          email: data.email,
-          password: data.password,
-          redirect: false,
-        });
-
-        router.push("/");
-      } else {
-        const { message } = (await response.json()) as ErrorResponse;
-        setError(message);
-      }
-    } catch (error) {}
+  const onSubmit = (data: SignUpFormData) => {
+    signUp(data);
   };
 
   return (
@@ -74,7 +38,7 @@ const SignUpForm = ({ ...props }: SignUpFormProps) => {
         <hr
           className={`${styles.divider} mb-2 mt-4 overflow-visible bg-primary-light text-center`}
         />
-        {error && <AlertError errorMessage={error} />}
+        {error && <AlertError errorMessage={error.message} />}
         <div className="grid grid-cols-2 gap-4">
           <FormField
             control={form.control}
@@ -238,8 +202,13 @@ const SignUpForm = ({ ...props }: SignUpFormProps) => {
         <Button
           className="rounded-md bg-primary px-4 py-2 text-sm font-medium"
           type="submit"
+          disabled={isLoading}
         >
-          Create Account
+          {isLoading ? (
+            <LuLoader2 className="h-6 w-6 animate-spin" />
+          ) : (
+            "Create Account"
+          )}
         </Button>
       </form>
     </Form>
