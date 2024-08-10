@@ -14,5 +14,9 @@ export type ReminderCalendarMonthProps = OmitNonHTMLAttributes<
     weekDaysNames: WeekDayName[];
     daysOfMonth: ReminderCalendarDate[];
     numberOfWeekDays: number;
+    onChangeDirection: (
+      direction: ReminderCalendarDirection,
+      customDate?: Date,
+    ) => void;
   }
 >;

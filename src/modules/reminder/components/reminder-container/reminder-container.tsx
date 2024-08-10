@@ -1,7 +1,3 @@
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-} from "@radix-ui/react-dropdown-menu";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import {
@@ -16,8 +12,10 @@ import {
   CardTitle,
 } from "~/modules/core/components/ui/card";
 import {
+  DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuTrigger,
 } from "~/modules/core/components/ui/dropdown-menu";
 import { ReminderCalendar } from "../reminder-calendar";
 import { type ReminderContainerProps } from "./types";

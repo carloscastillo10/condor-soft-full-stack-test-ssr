@@ -5,6 +5,7 @@ const Month = ({
   selectedMonth,
   daysOfMonth,
   numberOfWeekDays,
+  onChangeDirection,
   ...props
 }: MonthProps) => {
   const rows = daysOfMonth.length / numberOfWeekDays;
@@ -20,6 +21,7 @@ const Month = ({
           weekDays={weekDays}
           selectedMonth={selectedMonth}
           rows={rows}
+          onChangeDirection={onChangeDirection}
         />
       ))}
     </div>

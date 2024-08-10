@@ -5,7 +5,13 @@ import { checkIsToday } from "~/modules/reminder/utils/calendar";
 import { AddReminderModal } from "../../../add-reminder-modal";
 import { type DayProps } from "./types";
 
-const Day = ({ day, selectedMonth, rows, ...props }: DayProps) => {
+const Day = ({
+  day,
+  selectedMonth,
+  rows,
+  onChangeDirection,
+  ...props
+}: DayProps) => {
   const { state, functions } = useCreateReminderModal();
 
   const onSelectDay = (event: MouseEvent<HTMLDivElement>) => {
@@ -39,7 +45,9 @@ const Day = ({ day, selectedMonth, rows, ...props }: DayProps) => {
       <AddReminderModal
         modalRef={state.modalRef}
         isOpen={state.isOpenModal}
+        selectedDay={day}
         setIsOpen={functions.setIsOpenModal}
+        onChangeDirection={onChangeDirection}
         // style={{
         //   position: "absolute",
         //   top: state.modalPosition?.top,

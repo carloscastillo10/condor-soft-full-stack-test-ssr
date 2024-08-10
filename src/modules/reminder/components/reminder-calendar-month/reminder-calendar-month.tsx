@@ -12,6 +12,7 @@ const ReminderCalendarMonth = ({
   weekDaysNames,
   daysOfMonth,
   numberOfWeekDays,
+  onChangeDirection,
   ...props
 }: ReminderCalendarMonthProps) => {
   const calendarRef = useRef<HTMLDivElement>(null);
@@ -41,6 +42,7 @@ const ReminderCalendarMonth = ({
         selectedMonth={selectedMonth}
         daysOfMonth={daysOfMonth}
         numberOfWeekDays={numberOfWeekDays}
+        onChangeDirection={onChangeDirection}
       />
     </div>
   );

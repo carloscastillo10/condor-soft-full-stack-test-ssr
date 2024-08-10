@@ -1,4 +1,4 @@
-import { TooltipArrow, TooltipTrigger } from "@radix-ui/react-tooltip";
+import { TooltipArrow } from "@radix-ui/react-tooltip";
 import { useState } from "react";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import { Calendar } from "~/modules/core/components/ui/calendar";
@@ -11,6 +11,7 @@ import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
+  TooltipTrigger,
 } from "~/modules/core/components/ui/tooltip";
 import { type ReminderCalendarHeaderProps } from "./types";
 

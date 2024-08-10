@@ -1,3 +1,6 @@
+import { type z } from "zod";
+import { type createReminderSchema } from "./utils/validation";
+
 export interface ReminderCalendarDate {
   date: Date;
   seconds: number;
@@ -63,3 +66,11 @@ export interface ModalPosition {
 }
 
 export type ReminderCalendarDirection = "today" | "left" | "right" | "custom";
+export type ReminderFormData = z.infer<typeof createReminderSchema>;
+
+export interface CreateReminder {
+  title: string;
+  date: string;
+  time: string;
+  color: string;
+}

@@ -1,22 +1,25 @@
-import { DialogTitle } from "@radix-ui/react-dialog";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
+  DialogTitle,
 } from "~/modules/core/components/ui/dialog";
+import { AddReminderForm } from "../add-reminder-form";
 import { type AddReminderModalProps } from "./types";
 
 const AddReminderModal = ({
   modalRef,
   isOpen,
+  selectedDay,
   setIsOpen,
+  onChangeDirection,
   ...props
 }: AddReminderModalProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent
-        className="shadow-modal rounded-md border border-primary-light"
+        className="max-w-sm gap-3 rounded-md border border-primary-light bg-white p-4 shadow-modal"
         ref={modalRef}
         {...props}
       >
@@ -28,7 +31,10 @@ const AddReminderModal = ({
             Event description
           </DialogDescription>
         </DialogHeader>
-        <div>Aqui va el formulario</div>
+        <AddReminderForm
+          selectedDay={selectedDay}
+          onChangeDirection={onChangeDirection}
+        />
       </DialogContent>
     </Dialog>
   );

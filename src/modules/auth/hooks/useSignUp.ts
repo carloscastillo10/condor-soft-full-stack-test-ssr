@@ -49,10 +49,14 @@ const useSignUp = () => {
   });
 
   return {
-    form,
-    isLoading: status === "pending",
-    error,
-    signUp: mutate,
+    state: {
+      form,
+      isLoading: status === "pending",
+      error,
+    },
+    functions: {
+      signUp: mutate,
+    },
   };
 };
 
