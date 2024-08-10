@@ -1,6 +1,7 @@
-const trimAndRemoveWhitespace = (value: string) =>
-  value.replace(/\s+/g, "").trim();
-const trimAndRemoveWhiteSpacesLeavingOnlyOne = (value: string) =>
-  value.replace(/\s+/g, " ").trim();
+export function trimAndRemoveWhitespace(value: string) {
+  return value.replace(/\s+/g, "").trim();
+}
 
-export { trimAndRemoveWhiteSpacesLeavingOnlyOne, trimAndRemoveWhitespace };
+export function trimAndRemoveWhiteSpacesLeavingOnlyOne(value: string) {
+  return value.replace(/\s+/g, " ").trim();
+}

@@ -29,7 +29,9 @@ model Reminder {
    startDate DateTime
    color     String
    userId    Int
-   user      User     @relation(fields: [userId], references: [id]) 
+   user      User     @relation(fields: [userId], references: [id])
+   createdAt DateTime @default(now())
+   updatedAt DateTime @updatedAt
 
    @@index([userId])
 }

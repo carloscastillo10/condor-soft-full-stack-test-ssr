@@ -68,9 +68,6 @@ export interface ModalPosition {
 export type ReminderCalendarDirection = "today" | "left" | "right" | "custom";
 export type ReminderFormData = z.infer<typeof createReminderSchema>;
 
-export interface CreateReminder {
-  title: string;
-  date: string;
-  time: string;
-  color: string;
+export interface CreateReminder extends ReminderFormData {
+  userId: number;
 }
