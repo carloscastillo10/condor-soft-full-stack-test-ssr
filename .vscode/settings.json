@@ -3,6 +3,7 @@
     "skeleton",
     "ci-cd",
     "auth",
-    "reminder"
+    "reminder",
+    "database"
   ]
 }
