@@ -1,11 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
-import { type ErrorResponse } from "~/modules/core/types";
+import { type Reminder } from "~/modules/core/types";
 import { type ReminderCalendarDate, type ReminderFormData } from "../types";
 import { createReminderSchema } from "../utils/validation";
 
-const useReminder = (selectedDay: ReminderCalendarDate) => {
+const useCreateReminder = (selectedDay: ReminderCalendarDate) => {
   const form = useForm<ReminderFormData>({
     defaultValues: {
       title: "",
@@ -26,12 +26,20 @@ const useReminder = (selectedDay: ReminderCalendarDate) => {
     });
 
     if (!response.ok) {
-      const { message } = (await response.json()) as ErrorResponse;
-      console.log("errror:", message);
+      throw new Error("Failed to create reminder.");
     }
+
+    const newReminder = (await response.json()) as Reminder;
+    console.log("addNewReminder:", newReminder);
+
+    return newReminder;
   };
 
-  const { mutate, status, error } = useMutation({ mutationFn: create });
+  const {
+    mutate: createReminder,
+    status,
+    error,
+  } = useMutation({ mutationFn: create });
 
   return {
     state: {
@@ -40,9 +48,9 @@ const useReminder = (selectedDay: ReminderCalendarDate) => {
       error,
     },
     functions: {
-      createReminder: mutate,
+      createReminder,
     },
   };
 };
 
-export { useReminder };
+export { useCreateReminder };

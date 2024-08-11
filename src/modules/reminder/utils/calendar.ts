@@ -49,10 +49,8 @@ const getDay = (
   };
 };
 
-const getMonthNumberOfDays = (monthIndex: number, yearNumber: number) => {
-  console.log(new Date(yearNumber, monthIndex + 1, 0));
-  return new Date(yearNumber, monthIndex + 1, 0).getDate();
-};
+const getMonthNumberOfDays = (monthIndex: number, yearNumber: number) =>
+  new Date(yearNumber, monthIndex + 1, 0).getDate();
 
 const createMonth = (date: Date, locale: string) => {
   const monthDate = createDate(date, locale);
@@ -146,7 +144,6 @@ const getCalendarDaysOfMonth = (
   const firstDay = days[0]!;
   const lastDay = days[monthNumberOfDays - 1]!;
   const shiftIndex = firstWeekDayNumber - 1;
-  console.log(days, year, monthIndex, monthNumberOfDays);
 
   const numberOfPreviousDays =
     firstDay.dayNumberInWeek - 1 - shiftIndex < 0

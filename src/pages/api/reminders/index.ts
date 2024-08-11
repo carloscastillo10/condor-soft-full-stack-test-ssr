@@ -1,6 +1,6 @@
 import { type NextApiRequest, type NextApiResponse } from "next";
 import { getToken, type JWT } from "next-auth/jwt";
-import { createReminder } from "~/modules/reminder/services";
+import { createReminder, listReminders } from "~/modules/reminder/services";
 import { type ReminderFormData } from "~/modules/reminder/types";
 
 async function handlePost(
@@ -25,6 +25,32 @@ async function handlePost(
   }
 }
 
+async function handleGet(
+  req: NextApiRequest,
+  res: NextApiResponse,
+  session: JWT,
+) {
+  try {
+    const { from, to } = req.query;
+    if (!from || !to) {
+      return res.status(400).json({ message: "Missing required parameters" });
+    }
+
+    const reminders = await listReminders({
+      userId: parseInt(session.id as string, 10),
+      from: new Date(from as string),
+      to: new Date(to as string),
+    });
+
+    res.status(200).json(reminders);
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : "Something went wrong";
+
+    res.status(500).json({ message: errorMessage });
+  }
+}
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
@@ -40,6 +66,7 @@ export default async function handler(
     (req: NextApiRequest, res: NextApiResponse, session: JWT) => Promise<void>
   > = {
     POST: handlePost,
+    GET: handleGet,
   };
 
   const handler = methodHandlers[req.method!];

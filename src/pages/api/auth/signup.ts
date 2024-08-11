@@ -8,8 +8,8 @@ export default async function handler(
 ) {
   if (req.method === "POST") {
     try {
-      const data = req.body as CreateUser;
-      const newUser = await createUser(data);
+      const { name, lastName, email, password } = req.body as CreateUser;
+      const newUser = await createUser({ name, lastName, email, password });
 
       res.status(201).json(newUser);
     } catch (error) {

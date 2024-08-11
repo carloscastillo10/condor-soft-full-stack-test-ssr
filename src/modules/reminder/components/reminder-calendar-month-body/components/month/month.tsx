@@ -1,4 +1,5 @@
-import { reminders } from "~/modules/reminder/store/reminders";
+import { useMemo } from "react";
+import { useListReminder } from "~/modules/reminder/hooks/useListReminder";
 import { Week } from "../week";
 import { type MonthProps } from "./types";
 
@@ -9,11 +10,26 @@ const Month = ({
   onChangeDirection,
   ...props
 }: MonthProps) => {
-  const rows = daysOfMonth.length / numberOfWeekDays;
-  const weekDays = Array.from({ length: rows }).map((_, index) =>
-    daysOfMonth.slice(index * numberOfWeekDays, (index + 1) * numberOfWeekDays),
+  const {
+    state: { reminders },
+  } = useListReminder({
+    from: daysOfMonth[0]!,
+    to: daysOfMonth[daysOfMonth.length - 1]!,
+  });
+  const rows = useMemo(
+    () => daysOfMonth.length / numberOfWeekDays,
+    [daysOfMonth.length, numberOfWeekDays],
   );
-  const monthReminders = [...reminders]; // get of api
+  const weekDays = useMemo(
+    () =>
+      Array.from({ length: rows }).map((_, index) =>
+        daysOfMonth.slice(
+          index * numberOfWeekDays,
+          (index + 1) * numberOfWeekDays,
+        ),
+      ),
+    [daysOfMonth, numberOfWeekDays, rows],
+  );
 
   return (
     <div className="flex h-full w-full flex-col" {...props}>
@@ -23,7 +39,7 @@ const Month = ({
           weekDays={weekDays}
           selectedMonth={selectedMonth}
           rows={rows}
-          reminders={monthReminders}
+          reminders={reminders ?? []}
           onChangeDirection={onChangeDirection}
         />
       ))}

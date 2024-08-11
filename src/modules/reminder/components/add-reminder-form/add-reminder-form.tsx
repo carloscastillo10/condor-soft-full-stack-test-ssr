@@ -26,7 +26,7 @@ import {
   SelectValue,
 } from "~/modules/core/components/ui/select";
 import { cn } from "~/modules/core/lib/utils";
-import { useReminder } from "../../hooks/useReminder";
+import { useCreateReminder } from "../../hooks/useCreateReminder";
 import { type ReminderFormData } from "../../types";
 import { type AddReminderFormProps } from "./types";
 
@@ -38,7 +38,7 @@ const AddReminderForm = ({
   const {
     state: { form, isLoading, error },
     functions: { createReminder },
-  } = useReminder(selectedDay);
+  } = useCreateReminder(selectedDay);
   const [isOpenPopover, setIsOpenPopover] = useState<boolean>(false);
 
   const onSelectDate = (day: Date) => {
