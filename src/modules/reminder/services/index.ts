@@ -1,15 +1,11 @@
-import { parse } from "date-fns";
 import { type Reminder } from "~/modules/core/types";
 import { db } from "~/server/db";
 import { type CreateReminder, type QueryReminder } from "../types";
+import { parseDateTimeToDateTime } from "../utils/date";
 
 const createReminder = async (data: CreateReminder): Promise<Reminder> => {
   const { title, date, time, color, userId } = data;
-  const start = parse(
-    `${date.toISOString().split("T")[0]} ${time}:00`,
-    "yyyy-MM-dd HH:mm:ss",
-    new Date(),
-  );
+  const start = parseDateTimeToDateTime(date, time);
 
   const newReminder = await db.reminder.create({
     data: {

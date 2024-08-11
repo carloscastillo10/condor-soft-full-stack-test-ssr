@@ -1,8 +1,10 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { type Reminder } from "~/modules/core/types";
 import { type ReminderCalendarDate, type ReminderFormData } from "../types";
+import { parseDateTimeToDateTime } from "../utils/date";
+import { generateRandomId } from "../utils/random";
 import { createReminderSchema } from "../utils/validation";
 
 const useCreateReminder = (selectedDay: ReminderCalendarDate) => {
@@ -15,8 +17,9 @@ const useCreateReminder = (selectedDay: ReminderCalendarDate) => {
     },
     resolver: zodResolver(createReminderSchema),
   });
+  const queryClient = useQueryClient();
 
-  const create = async (data: ReminderFormData) => {
+  const create = async (data: ReminderFormData): Promise<Reminder> => {
     const response = await fetch("/api/reminders", {
       method: "POST",
       headers: {
@@ -30,7 +33,6 @@ const useCreateReminder = (selectedDay: ReminderCalendarDate) => {
     }
 
     const newReminder = (await response.json()) as Reminder;
-    console.log("addNewReminder:", newReminder);
 
     return newReminder;
   };
@@ -39,7 +41,49 @@ const useCreateReminder = (selectedDay: ReminderCalendarDate) => {
     mutate: createReminder,
     status,
     error,
-  } = useMutation({ mutationFn: create });
+  } = useMutation({
+    mutationFn: create,
+    onMutate: async (newReminder) => {
+      await queryClient.cancelQueries({ queryKey: ["reminders"] });
+
+      const previousReminders = queryClient.getQueryData<Reminder[]>([
+        "reminders",
+      ]);
+      const tempoId = generateRandomId();
+      const newReminderToAdd: Reminder = {
+        id: tempoId,
+        title: newReminder.title,
+        start: parseDateTimeToDateTime(newReminder.date, newReminder.time),
+        color: newReminder.color,
+      };
+
+      queryClient.setQueryData<Reminder[]>(["reminders"], (oldData = []) => {
+        return [...oldData, newReminderToAdd];
+      });
+
+      return previousReminders;
+    },
+    onSuccess: (newReminder) => {
+      // Update assigned id in db
+      queryClient.setQueryData<Reminder[]>(["reminders"], (oldData = []) => {
+        return oldData.map((reminder) =>
+          reminder.id === newReminder.id
+            ? { ...reminder, ...newReminder }
+            : reminder,
+        );
+      });
+    },
+    onError: (_, __, context) => {
+      const previousReminders = context;
+
+      if (previousReminders) {
+        queryClient.setQueryData<Reminder[]>(["reminders"], previousReminders);
+      }
+    },
+    onSettled: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["reminders"] });
+    },
+  });
 
   return {
     state: {
