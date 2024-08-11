@@ -16,8 +16,22 @@ model User {
     lastName  String
     email     String @unique
     password  String
+    reminders Reminder[]
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
     @@index([email])
+}
+
+model Reminder {
+   id        Int      @id @default(autoincrement())
+   title     String
+   start     DateTime
+   color     String
+   userId    Int
+   user      User     @relation(fields: [userId], references: [id])
+   createdAt DateTime @default(now())
+   updatedAt DateTime @updatedAt
+
+   @@index([userId])
 }

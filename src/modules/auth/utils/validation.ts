@@ -1,9 +1,8 @@
 import { z } from "zod";
-
-const trimAndRemoveWhitespace = (value: string) =>
-  value.replace(/\s+/g, "").trim();
-const trimAndRemoveWhiteSpacesLeavingOnlyOne = (value: string) =>
-  value.replace(/\s+/g, " ").trim();
+import {
+  trimAndRemoveWhitespace,
+  trimAndRemoveWhiteSpacesLeavingOnlyOne,
+} from "~/modules/core/utils/sanitize";
 
 const email = z
   .string({ required_error: "Email is required." })

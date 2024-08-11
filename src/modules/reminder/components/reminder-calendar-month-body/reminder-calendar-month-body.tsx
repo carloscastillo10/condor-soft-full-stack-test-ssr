@@ -5,6 +5,7 @@ const ReminderCalendarMonthBody = ({
   selectedMonth,
   daysOfMonth,
   numberOfWeekDays,
+  onChangeDirection,
   ...props
 }: ReminderCalendarMonthBodyProps) => (
   <div className="flex h-full" {...props}>
@@ -12,6 +13,7 @@ const ReminderCalendarMonthBody = ({
       selectedMonth={selectedMonth}
       daysOfMonth={daysOfMonth}
       numberOfWeekDays={numberOfWeekDays}
+      onChangeDirection={onChangeDirection}
     />
   </div>
 );

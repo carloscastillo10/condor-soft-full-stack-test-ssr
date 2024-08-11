@@ -24,6 +24,7 @@ const ReminderCalendar = ({ ...props }: ReminderCalendarProps) => {
         weekDaysNames={state.weekDaysNames}
         daysOfMonth={state.daysOfMonth}
         numberOfWeekDays={state.numberOfWeekDays}
+        onChangeDirection={functions.onChangeDirection}
       />
     </div>
   );

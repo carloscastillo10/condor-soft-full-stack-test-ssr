@@ -18,7 +18,10 @@ import styles from "./styles.module.css";
 import { type SignUpFormProps } from "./types";
 
 const SignUpForm = ({ ...props }: SignUpFormProps) => {
-  const { form, isLoading, error, signUp } = useSignUp();
+  const {
+    state: { form, isLoading, error },
+    functions: { signUp },
+  } = useSignUp();
 
   const onSubmit = (data: SignUpFormData) => {
     signUp(data);

@@ -12,6 +12,7 @@ const ReminderCalendarMonth = ({
   weekDaysNames,
   daysOfMonth,
   numberOfWeekDays,
+  onChangeDirection,
   ...props
 }: ReminderCalendarMonthProps) => {
   const calendarRef = useRef<HTMLDivElement>(null);
@@ -35,12 +36,13 @@ const ReminderCalendarMonth = ({
   }, [direction, lastSelectedDay, selectedDay]);
 
   return (
-    <div ref={calendarRef} className="flex h-full flex-col gap-4" {...props}>
+    <div ref={calendarRef} className="flex h-full flex-col gap-2" {...props}>
       <ReminderCalendarMonthHeader weekDaysNames={weekDaysNames} />
       <ReminderCalendarMonthBody
         selectedMonth={selectedMonth}
         daysOfMonth={daysOfMonth}
         numberOfWeekDays={numberOfWeekDays}
+        onChangeDirection={onChangeDirection}
       />
     </div>
   );
