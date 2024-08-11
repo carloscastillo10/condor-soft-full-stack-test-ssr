@@ -1,0 +1,32 @@
+{
+  "version": "0.2",
+  "language": "en,es",
+  "ignorePaths": [
+    ".gitignore",
+    "pnpm-lock.yaml"
+  ],
+  "words": [
+    "autenticación",
+    "autoincrement",
+    "CLIENTVAR",
+    "clsx",
+    "Condorsoft",
+    "CONDORSOFT",
+    "datasource",
+    "Gmail",
+    "hookform",
+    "lucide",
+    "nextauth",
+    "NEXTAUTH",
+    "nextjs",
+    "nprogress",
+    "postgresql",
+    "signin",
+    "signup",
+    "tabler",
+    "tailwindcss",
+    "tanstack",
+    "trpc",
+    "websockets"
+  ]
+}
