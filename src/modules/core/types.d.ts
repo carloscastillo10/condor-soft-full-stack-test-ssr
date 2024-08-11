@@ -8,7 +8,7 @@ export interface User {
 export interface Reminder {
   id: number;
   title: string;
-  startDate: Date;
+  start: Date;
   color: string;
 }
 

@@ -49,10 +49,10 @@ const getDay = (
   };
 };
 
-const getMonthNumberOfDays = (
-  monthIndex: number,
-  yearNumber: number = new Date().getFullYear(),
-) => new Date(yearNumber, monthIndex + 1, 0).getDate();
+const getMonthNumberOfDays = (monthIndex: number, yearNumber: number) => {
+  console.log(new Date(yearNumber, monthIndex + 1, 0));
+  return new Date(yearNumber, monthIndex + 1, 0).getDate();
+};
 
 const createMonth = (date: Date, locale: string) => {
   const monthDate = createDate(date, locale);
@@ -142,10 +142,11 @@ const getCalendarDaysOfMonth = (
     new Date(year, monthIndex),
     locale,
   ).createMonthDays();
-  const monthNumberOfDays = getMonthNumberOfDays(year, monthIndex);
+  const monthNumberOfDays = getMonthNumberOfDays(monthIndex, year);
   const firstDay = days[0]!;
   const lastDay = days[monthNumberOfDays - 1]!;
   const shiftIndex = firstWeekDayNumber - 1;
+  console.log(days, year, monthIndex, monthNumberOfDays);
 
   const numberOfPreviousDays =
     firstDay.dayNumberInWeek - 1 - shiftIndex < 0
@@ -188,8 +189,6 @@ const getCalendarDaysOfMonth = (
   return calendarDaysOfMonth;
 };
 
-export { getCalendarDaysOfMonth };
-
 const checkDateIsEqual = (date1: Date, date2: Date): boolean => {
   const isCurrentYear = date1.getFullYear() === date2.getFullYear();
   const isCurrentMonth = date1.getMonth() === date2.getMonth();
@@ -209,5 +208,6 @@ export {
   checkIsToday,
   createDate,
   createMonth,
+  getCalendarDaysOfMonth,
   getWeekDaysNames,
 };

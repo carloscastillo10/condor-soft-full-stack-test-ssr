@@ -4,27 +4,17 @@ import { db } from "~/server/db";
 import { type CreateReminder } from "../types";
 
 const createReminder = async (data: CreateReminder): Promise<Reminder> => {
-  console.log("dattita:", data);
   const { title, date, time, color, userId } = data;
-  const startDate = parse(
+  const start = parse(
     `${date.toISOString().split("T")[0]} ${time}:00`,
     "yyyy-MM-dd HH:mm:ss",
     new Date(),
   );
 
-  console.log({
-    data: {
-      title,
-      startDate,
-      color,
-      userId,
-    },
-  });
-
   const newReminder = await db.reminder.create({
     data: {
       title,
-      startDate,
+      start,
       color,
       userId,
     },

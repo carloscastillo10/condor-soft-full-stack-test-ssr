@@ -26,7 +26,7 @@ model User {
 model Reminder {
    id        Int      @id @default(autoincrement())
    title     String
-   startDate DateTime
+   start     DateTime
    color     String
    userId    Int
    user      User     @relation(fields: [userId], references: [id])

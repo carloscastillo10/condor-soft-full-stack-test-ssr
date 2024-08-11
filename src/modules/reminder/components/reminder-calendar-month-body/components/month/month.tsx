@@ -1,3 +1,4 @@
+import { reminders } from "~/modules/reminder/store/reminders";
 import { Week } from "../week";
 import { type MonthProps } from "./types";
 
@@ -12,6 +13,7 @@ const Month = ({
   const weekDays = Array.from({ length: rows }).map((_, index) =>
     daysOfMonth.slice(index * numberOfWeekDays, (index + 1) * numberOfWeekDays),
   );
+  const monthReminders = [...reminders]; // get of api
 
   return (
     <div className="flex h-full w-full flex-col" {...props}>
@@ -21,6 +23,7 @@ const Month = ({
           weekDays={weekDays}
           selectedMonth={selectedMonth}
           rows={rows}
+          reminders={monthReminders}
           onChangeDirection={onChangeDirection}
         />
       ))}
