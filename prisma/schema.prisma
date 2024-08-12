@@ -2,37 +2,51 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-    provider      = "prisma-client-js"
-    binaryTargets = ["native", "rhel-openssl-3.0.x"]
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
 }
 
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
-    id        Int      @id @default(autoincrement())
-    name      String
-    lastName  String
-    email     String @unique
-    password  String
-    reminders Reminder[]
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  id        Int        @id @default(autoincrement())
+  name      String
+  lastName  String
+  email     String     @unique
+  password  String
+  reminders Reminder[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 
-    @@index([email])
+  @@index([email])
 }
 
 model Reminder {
-   id        Int      @id @default(autoincrement())
-   title     String
-   start     DateTime
-   color     String
-   userId    Int
-   user      User     @relation(fields: [userId], references: [id])
-   createdAt DateTime @default(now())
-   updatedAt DateTime @updatedAt
+  id           Int            @id @default(autoincrement())
+  title        String
+  start        DateTime
+  color        String
+  userId       Int
+  user         User           @relation(fields: [userId], references: [id])
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  Notification Notification[]
 
-   @@index([userId])
+  @@index([userId])
+}
+
+model Notification {
+  id         Int      @id @default(autoincrement())
+  reminderId Int
+  scheduleId String
+  status     String   @default("pending")
+  reminder   Reminder @relation(fields: [reminderId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([reminderId])
+  @@index([scheduleId])
 }

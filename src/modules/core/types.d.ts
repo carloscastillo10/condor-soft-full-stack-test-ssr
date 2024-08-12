@@ -38,6 +38,16 @@ export interface Trigger {
   data: unknown;
 }
 
-export type EmailNotificationRequestBody = Required<
-  Pick<Reminder, "title" | "start" | "user">
->;
+export type NotificationStatus = "pending" | "sent";
+
+export interface Notification {
+  id: number;
+  reminderId: number;
+  scheduleId: string;
+  status: NotificationStatus;
+}
+
+export type UpdateNotification = Required<Pick<Notification, "id">> &
+  Partial<Pick<Notification, "status">>;
+
+export type EmailNotificationRequestBody = Required<Omit<Reminder, "color">>;

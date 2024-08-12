@@ -3,6 +3,7 @@ import { getToken, type JWT } from "next-auth/jwt";
 import {
   createReminder,
   listReminders,
+  saveNotification,
   scheduleReminder,
 } from "~/modules/reminder/services";
 import { type ReminderFormData } from "~/modules/reminder/types";
@@ -21,7 +22,8 @@ async function handlePost(
     });
 
     // Schedule reminder in upstash
-    await scheduleReminder(newReminder);
+    const { scheduleId } = await scheduleReminder(newReminder);
+    await saveNotification({ reminderId: newReminder.id, scheduleId });
 
     res.status(201).json(newReminder);
   } catch (error) {

@@ -87,3 +87,12 @@ export interface ReminderNotificationEvent {
   userId: number;
   reminderTitle: string;
 }
+
+export interface CreateReminderNotification {
+  reminderId: number;
+  scheduleId: string;
+}
+
+export interface QueryNotification {
+  reminderId: number;
+}

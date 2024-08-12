@@ -1,13 +1,16 @@
 import { type NextApiRequest, type NextApiResponse } from "next";
 import { type EmailNotificationRequestBody } from "~/modules/core/types";
 import {
+  deleteScheduleReminder,
   emitReminderNotificationEvent,
+  findNotification,
   sendReminderEmailNotification,
+  updateNotification,
 } from "~/modules/reminder/services";
 
 async function handlePost(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const { title, start, user } = req.body as EmailNotificationRequestBody;
+    const { id, title, start, user } = req.body as EmailNotificationRequestBody;
     await Promise.all([
       sendReminderEmailNotification({
         title,
@@ -19,6 +22,15 @@ async function handlePost(req: NextApiRequest, res: NextApiResponse) {
         reminderTitle: title,
       }),
     ]);
+
+    const notification = await findNotification({ reminderId: id });
+
+    if (notification) {
+      await Promise.all([
+        updateNotification({ id: notification.id, status: "sent" }),
+        deleteScheduleReminder(notification.scheduleId),
+      ]);
+    }
 
     res.status(201).json({ message: "Email sent." });
   } catch (error) {
