@@ -1,36 +1,24 @@
-import { useSession } from "next-auth/react";
-import { useRealTime } from "~/modules/core/hooks/useRealTime";
 import { useCalendar } from "../../hooks/useCalendar";
 import { ReminderCalendarHeader } from "../reminder-calendar-header";
 import { ReminderCalendarMonth } from "../reminder-calendar-month";
 import { type ReminderCalendarProps } from "./types";
 
-const ReminderCalendar = ({ ...props }: ReminderCalendarProps) => {
+const ReminderCalendar = ({ isLoading, ...props }: ReminderCalendarProps) => {
   const { state, functions } = useCalendar({
     date: new Date(),
     numberOfWeekDays: 7,
   });
 
-  const { data: session } = useSession();
-
-  const onNotification = (data: unknown) => {
-    console.log("Enviando recordatorio ahora", data);
-  };
-
-  useRealTime({
-    channelName: `user-${session?.user.id}`,
-    eventName: "reminder-sent",
-    callback: onNotification,
-  });
-
   return (
     <div className="flex h-full flex-col gap-4" {...props}>
       <ReminderCalendarHeader
+        isLoading={isLoading}
         selectedDay={state.selectedDay}
         displayedDate={state.displayedDate}
         onChangeDirection={functions.onChangeDirection}
       />
       <ReminderCalendarMonth
+        isLoading={isLoading}
         direction={state.direction}
         selectedDay={state.selectedDay}
         lastSelectedDay={state.lastSelectedDay}

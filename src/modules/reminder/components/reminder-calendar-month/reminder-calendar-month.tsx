@@ -1,10 +1,12 @@
 import { useEffect, useRef } from "react";
+import { Skeleton } from "~/modules/core/components/ui/skeleton";
 import { getAnimation } from "../../utils/animation";
 import { ReminderCalendarMonthBody } from "../reminder-calendar-month-body";
 import { ReminderCalendarMonthHeader } from "../reminder-calendar-month-header";
 import { type ReminderCalendarMonthProps } from "./types";
 
 const ReminderCalendarMonth = ({
+  isLoading,
   direction,
   selectedDay,
   lastSelectedDay,
@@ -36,15 +38,25 @@ const ReminderCalendarMonth = ({
   }, [direction, lastSelectedDay, selectedDay]);
 
   return (
-    <div ref={calendarRef} className="flex h-full flex-col gap-2" {...props}>
-      <ReminderCalendarMonthHeader weekDaysNames={weekDaysNames} />
-      <ReminderCalendarMonthBody
-        selectedMonth={selectedMonth}
-        daysOfMonth={daysOfMonth}
-        numberOfWeekDays={numberOfWeekDays}
-        onChangeDirection={onChangeDirection}
-      />
-    </div>
+    <>
+      {isLoading ? (
+        <Skeleton className="h-full w-full bg-primary-light" />
+      ) : (
+        <div
+          ref={calendarRef}
+          className="flex h-full flex-col gap-2"
+          {...props}
+        >
+          <ReminderCalendarMonthHeader weekDaysNames={weekDaysNames} />
+          <ReminderCalendarMonthBody
+            selectedMonth={selectedMonth}
+            daysOfMonth={daysOfMonth}
+            numberOfWeekDays={numberOfWeekDays}
+            onChangeDirection={onChangeDirection}
+          />
+        </div>
+      )}
+    </>
   );
 };
 

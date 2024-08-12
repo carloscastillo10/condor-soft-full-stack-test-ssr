@@ -11,15 +11,17 @@ const Month = ({
   ...props
 }: MonthProps) => {
   const {
-    state: { reminders },
+    state: { reminders, isLoading },
   } = useListReminder({
     from: daysOfMonth[0]!,
     to: daysOfMonth[daysOfMonth.length - 1]!,
   });
+
   const rows = useMemo(
     () => daysOfMonth.length / numberOfWeekDays,
     [daysOfMonth.length, numberOfWeekDays],
   );
+
   const weekDays = useMemo(
     () =>
       Array.from({ length: rows }).map((_, index) =>
