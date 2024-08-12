@@ -39,6 +39,19 @@ export const env = createEnv({
         (str) => !str.includes("YOUR_GOOGLE_CLIENT_SECRET_HERE"),
         "You forgot to change the default GOOGLE_CLIENT_SECRET",
       ),
+    QSTASH_BASE_URL: z
+      .string()
+      .url()
+      .refine(
+        (str) => !str.includes("YOUR_QSTASH_BASE_URL_HERE"),
+        "You forgot to change the default QSTASH_BASE_URL",
+      ),
+    QSTASH_TOKEN: z
+      .string()
+      .refine(
+        (str) => !str.includes("YOUR_QSTASH_TOKEN_HERE"),
+        "You forgot to change the default QSTASH_TOKEN",
+      ),
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
@@ -63,6 +76,8 @@ export const env = createEnv({
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+    QSTASH_BASE_URL: process.env.QSTASH_BASE_URL,
+    QSTASH_TOKEN: process.env.QSTASH_TOKEN,
     NODE_ENV: process.env.NODE_ENV,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },

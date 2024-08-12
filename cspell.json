@@ -21,12 +21,15 @@
     "nextjs",
     "nprogress",
     "postgresql",
+    "qstash",
+    "QSTASH",
     "signin",
     "signup",
     "tabler",
     "tailwindcss",
     "tanstack",
     "trpc",
+    "upstash",
     "websockets"
   ]
 }

@@ -73,6 +73,7 @@ export default async function handler(
 
   if (!handler) {
     res.setHeader("Allow", Object.keys(methodHandlers));
+
     return res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 

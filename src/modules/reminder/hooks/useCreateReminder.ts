@@ -29,6 +29,7 @@ const useCreateReminder = (selectedDay: ReminderCalendarDate) => {
     });
 
     if (!response.ok) {
+      console.log(await response.json());
       throw new Error("Failed to create reminder.");
     }
 
