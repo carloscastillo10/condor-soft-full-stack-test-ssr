@@ -38,6 +38,7 @@ const useListReminder = ({
   const {
     data: reminders,
     isLoading,
+    isFetching,
     error,
   } = useQuery<Reminder[]>({
     queryKey: ["reminders", from, to],
@@ -48,7 +49,7 @@ const useListReminder = ({
   return {
     state: {
       reminders,
-      isLoading,
+      isLoading: isLoading || isFetching,
       error,
     },
   };

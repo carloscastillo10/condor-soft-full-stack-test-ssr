@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useLoadingToast } from "~/modules/core/hooks/ueLoadingToast";
 import { useListReminder } from "~/modules/reminder/hooks/useListReminder";
 import { Week } from "../week";
 import { type MonthProps } from "./types";
@@ -32,6 +33,8 @@ const Month = ({
       ),
     [daysOfMonth, numberOfWeekDays, rows],
   );
+
+  useLoadingToast(isLoading, "Loading reminders");
 
   return (
     <div className="flex h-full w-full flex-col" {...props}>

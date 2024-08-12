@@ -12,8 +12,6 @@ const useRealTime = ({
 }) => {
   useEffect(() => {
     const channel = socketClient.subscribe(channelName);
-    console.log(channel)
-
     channel.bind(eventName, callback);
 
     return () => {

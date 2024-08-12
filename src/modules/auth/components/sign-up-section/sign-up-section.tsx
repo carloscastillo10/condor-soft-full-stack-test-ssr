@@ -3,7 +3,7 @@ import { type SignUpSectionProps } from "./types";
 
 const SignUpSection = ({ ...props }: SignUpSectionProps) => (
   <section
-    className="flex min-h-screen items-center justify-center px-6"
+    className="section flex min-h-screen items-center justify-center px-6"
     {...props}
   >
     <SignUpContainer />
