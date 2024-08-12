@@ -1,3 +1,5 @@
+import { useSession } from "next-auth/react";
+import { useRealTime } from "~/modules/core/hooks/useRealTime";
 import { useCalendar } from "../../hooks/useCalendar";
 import { ReminderCalendarHeader } from "../reminder-calendar-header";
 import { ReminderCalendarMonth } from "../reminder-calendar-month";
@@ -7,6 +9,18 @@ const ReminderCalendar = ({ ...props }: ReminderCalendarProps) => {
   const { state, functions } = useCalendar({
     date: new Date(),
     numberOfWeekDays: 7,
+  });
+
+  const { data: session } = useSession();
+
+  const onNotification = (data: unknown) => {
+    console.log("Enviando recordatorio ahora", data);
+  };
+
+  useRealTime({
+    channelName: `user-${session?.user.id}`,
+    eventName: "reminder-sent",
+    callback: onNotification,
   });
 
   return (

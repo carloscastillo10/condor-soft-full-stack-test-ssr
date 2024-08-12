@@ -12,6 +12,7 @@ export interface Reminder {
   title: string;
   start: Date;
   color: string;
+  user?: User;
 }
 
 export type ErrorResponse = {
@@ -30,3 +31,13 @@ export interface Email {
   subject: string;
   template: JSX.Element;
 }
+
+export interface Trigger {
+  channel: string;
+  event: string;
+  data: unknown;
+}
+
+export type EmailNotificationRequestBody = Required<
+  Pick<Reminder, "title" | "start" | "user">
+>;

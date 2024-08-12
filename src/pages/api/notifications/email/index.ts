@@ -1,8 +1,25 @@
 import { type NextApiRequest, type NextApiResponse } from "next";
+import { type EmailNotificationRequestBody } from "~/modules/core/types";
+import {
+  emitReminderNotificationEvent,
+  sendReminderEmailNotification,
+} from "~/modules/reminder/services";
 
 async function handlePost(req: NextApiRequest, res: NextApiResponse) {
   try {
-    console.log("emailBody:", req.body);
+    const { title, start, user } = req.body as EmailNotificationRequestBody;
+    await Promise.all([
+      sendReminderEmailNotification({
+        title,
+        start: new Date(start),
+        email: user.email,
+      }),
+      emitReminderNotificationEvent({
+        userId: parseInt(user.id, 10),
+        reminderTitle: title,
+      }),
+    ]);
+
     res.status(201).json({ message: "Email sent." });
   } catch (error) {
     const errorMessage =

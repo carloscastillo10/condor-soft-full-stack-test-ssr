@@ -5,6 +5,7 @@
     "auth",
     "reminder",
     "database",
-    "scheduler"
+    "scheduler",
+    "websockets"
   ]
 }

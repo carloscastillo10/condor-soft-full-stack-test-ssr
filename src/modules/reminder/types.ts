@@ -1,4 +1,5 @@
 import { type z } from "zod";
+import { type Reminder, type User } from "../core/types";
 import { type createReminderSchema } from "./utils/validation";
 
 export interface ReminderCalendarDate {
@@ -76,4 +77,13 @@ export interface QueryReminder {
   userId: number;
   from: Date;
   to: Date;
+}
+
+export interface ReminderNotification
+  extends Pick<Reminder, "title" | "start">,
+    Pick<User, "email"> {}
+
+export interface ReminderNotificationEvent {
+  userId: number;
+  reminderTitle: string;
 }

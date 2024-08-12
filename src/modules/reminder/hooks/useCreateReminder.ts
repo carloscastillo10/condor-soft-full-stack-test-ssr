@@ -29,7 +29,6 @@ const useCreateReminder = (selectedDay: ReminderCalendarDate) => {
     });
 
     if (!response.ok) {
-      console.log(await response.json());
       throw new Error("Failed to create reminder.");
     }
 
@@ -64,7 +63,7 @@ const useCreateReminder = (selectedDay: ReminderCalendarDate) => {
 
       return previousReminders;
     },
-    onSuccess: (newReminder) => {
+    onSuccess: async (newReminder) => {
       // Update assigned id in db
       queryClient.setQueryData<Reminder[]>(["reminders"], (oldData = []) => {
         return oldData.map((reminder) =>

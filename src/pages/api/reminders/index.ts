@@ -1,6 +1,10 @@
 import { type NextApiRequest, type NextApiResponse } from "next";
 import { getToken, type JWT } from "next-auth/jwt";
-import { createReminder, listReminders } from "~/modules/reminder/services";
+import {
+  createReminder,
+  listReminders,
+  scheduleReminder,
+} from "~/modules/reminder/services";
 import { type ReminderFormData } from "~/modules/reminder/types";
 
 async function handlePost(
@@ -15,6 +19,9 @@ async function handlePost(
       date: new Date(data.date),
       userId: parseInt(session.id as string, 10),
     });
+
+    // Schedule reminder in upstash
+    await scheduleReminder(newReminder);
 
     res.status(201).json(newReminder);
   } catch (error) {
