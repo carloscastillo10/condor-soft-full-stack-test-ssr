@@ -1,18 +1,22 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { convertToTwoDigitFormat } from "~/modules/core/lib/utils";
 import { type Reminder } from "~/modules/core/types";
 import { type ReminderCalendarDate, type ReminderFormData } from "../types";
+import { createDate } from "../utils/calendar";
 import { parseDateTimeToDateTime } from "../utils/date";
 import { generateRandomId } from "../utils/random";
 import { createReminderSchema } from "../utils/validation";
 
 const useCreateReminder = (selectedDay: ReminderCalendarDate) => {
+  const { hours, minutes } = createDate(new Date());
   const form = useForm<ReminderFormData>({
     defaultValues: {
       title: "",
       date: selectedDay.date,
-      time: `${selectedDay.hours}:${selectedDay.minutes}`,
+      time: `${convertToTwoDigitFormat(hours)}:${convertToTwoDigitFormat(minutes)}`,
       color: "#0F172A",
     },
     resolver: zodResolver(createReminderSchema),
@@ -61,6 +65,7 @@ const useCreateReminder = (selectedDay: ReminderCalendarDate) => {
         return [...oldData, newReminderToAdd];
       });
 
+      // For rollback is necessary
       return previousReminders;
     },
     onSuccess: async (newReminder) => {
@@ -72,6 +77,12 @@ const useCreateReminder = (selectedDay: ReminderCalendarDate) => {
             : reminder,
         );
       });
+
+      toast.success("Reminder successfully created", {
+        className: "bg-emerald-500 border-emerald-500 font-semibold",
+        position: "top-center",
+        duration: 3000,
+      });
     },
     onError: (_, __, context) => {
       const previousReminders = context;
@@ -79,6 +90,12 @@ const useCreateReminder = (selectedDay: ReminderCalendarDate) => {
       if (previousReminders) {
         queryClient.setQueryData<Reminder[]>(["reminders"], previousReminders);
       }
+
+      toast.error("Error when scheduling reminder", {
+        className: "bg-red-500 border-red-500 font-semibold",
+        position: "top-center",
+        duration: 3000,
+      });
     },
     onSettled: async () => {
       await queryClient.invalidateQueries({ queryKey: ["reminders"] });

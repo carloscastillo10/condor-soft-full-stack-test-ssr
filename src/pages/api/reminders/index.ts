@@ -24,12 +24,9 @@ async function handlePost(
     // Schedule reminder in upstash
     const { scheduleId } = await scheduleReminder(newReminder);
     await saveNotification({ reminderId: newReminder.id, scheduleId });
-
-    res.status(201).json(newReminder);
   } catch (error) {
     const errorMessage =
       error instanceof Error ? error.message : "Something went wrong";
-    console.log("error", error);
 
     res.status(500).json({ message: errorMessage });
   }

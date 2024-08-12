@@ -27,7 +27,7 @@ const ReminderContainer = ({ ...props }: ReminderContainerProps) => {
       className: "bg-black text-white border-black shadow-modal",
       description: format(reminderStart, "EEEE, MMMM do 'at' h:mma"),
       icon: <FaBell className="mr-4 h-4 w-4" />,
-      duration: 4000,
+      duration: 5000,
       position: "bottom-left",
     });
   };

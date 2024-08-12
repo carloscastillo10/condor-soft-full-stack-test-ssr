@@ -6,9 +6,6 @@ const generateCron = (date: Date) => {
   const dayOfWeek = "*";
   const cron = `${minutes} ${hours} ${dayOfMonth} ${month} ${dayOfWeek}`;
 
-  console.log(cron);
-  console.log(date.getTime() / 1000);
-
   return cron;
 };
 
