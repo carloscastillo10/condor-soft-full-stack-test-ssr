@@ -5,11 +5,10 @@ import { type Job } from "../types";
 const scheduleJob = async ({ destination, cron, body }: Job) => {
   console.log(`${env.QSTASH_BASE_URL}${destination}`, cron, body);
   await scheduler.schedules.create({
-    destination: `${env.QSTASH_BASE_URL}/${destination}`,
+    destination: `${env.QSTASH_BASE_URL}${destination}`,
     cron,
     body,
   });
-  console.log("si se configuro o no?");
 };
 
 export { scheduleJob };

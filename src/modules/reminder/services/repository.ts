@@ -5,7 +5,7 @@ import { parseDateTimeToDateTime } from "../utils/date";
 
 const createReminder = async (data: CreateReminder): Promise<Reminder> => {
   const { title, date, time, color, userId } = data;
-  const start = parseDateTimeToDateTime(date, "00:05");
+  const start = parseDateTimeToDateTime(date, "10:40");
 
   const newReminder = await db.reminder.create({
     data: {

@@ -27,6 +27,7 @@ async function handlePost(
   } catch (error) {
     const errorMessage =
       error instanceof Error ? error.message : "Something went wrong";
+    console.log("error", error);
 
     res.status(500).json({ message: errorMessage });
   }
