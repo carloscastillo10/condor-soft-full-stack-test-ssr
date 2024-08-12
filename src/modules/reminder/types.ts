@@ -97,3 +97,20 @@ export interface CreateReminderNotification {
 export interface QueryNotification {
   reminderId: number;
 }
+
+export interface CreateReminderModalState {
+  isOpen: boolean;
+  selectedDay: ReminderCalendarDate;
+  openModal: (
+    day: ReminderCalendarDate,
+    onChangeDirection: (
+      direction: ReminderCalendarDirection,
+      customDate?: Date,
+    ) => void,
+  ) => void;
+  closeModal: () => void;
+  onChangeDirection: (
+    direction: ReminderCalendarDirection,
+    customDate?: Date,
+  ) => void;
+}

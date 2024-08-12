@@ -26,12 +26,16 @@ import { type AddReminderFormProps } from "./types";
 const AddReminderForm = ({
   selectedDay,
   onChangeDirection,
+  closeModal,
   ...props
 }: AddReminderFormProps) => {
   const {
     state: { form, isLoading, error },
     functions: { createReminder },
-  } = useCreateReminder(selectedDay);
+  } = useCreateReminder({
+    selectedDay,
+    closeModal,
+  });
   const [isOpenPopover, setIsOpenPopover] = useState<boolean>(false);
 
   const onSelectDate = (day: Date) => {
@@ -107,8 +111,9 @@ const AddReminderForm = ({
                 <PopoverContent className="w-auto p-0" align="start">
                   <Calendar
                     mode="single"
-                    selected={selectedDay.date}
-                    defaultMonth={selectedDay.date}
+                    selected={field.value}
+                    defaultMonth={field.value}
+                    onSelect={field.onChange}
                     onDayClick={(day) => onSelectDate(day)}
                     initialFocus
                     classNames={{

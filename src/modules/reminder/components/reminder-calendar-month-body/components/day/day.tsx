@@ -1,9 +1,8 @@
-import { useMemo, type MouseEvent } from "react";
+import { useMemo } from "react";
 import { cn } from "~/modules/core/lib/utils";
-import { useCreateReminderModal } from "~/modules/reminder/hooks/useCreateReminderModal";
+import { useCreateReminderModalStore } from "~/modules/reminder/store/useCreateReminderModalStore";
 import { checkIsToday } from "~/modules/reminder/utils/calendar";
 import { filterRemindersByDate } from "~/modules/reminder/utils/filters";
-import { AddReminderModal } from "../../../add-reminder-modal";
 import { ReminderShortList } from "../../../reminder-short-list";
 import { type DayProps } from "./types";
 
@@ -15,18 +14,14 @@ const Day = ({
   onChangeDirection,
   ...props
 }: DayProps) => {
-  const { state, functions } = useCreateReminderModal();
+  const { openModal } = useCreateReminderModalStore();
   const dayReminders = useMemo(
     () => filterRemindersByDate(reminders, day),
     [reminders, day],
   );
 
-  const onSelectDay = (event: MouseEvent<HTMLDivElement>) => {
-    const element = event.currentTarget;
-    const rect = element.getBoundingClientRect();
-
-    functions.setIsOpenModal(true);
-    functions.adjustModalPosition({ top: rect.bottom, left: rect.left });
+  const onSelectDay = () => {
+    openModal(day, onChangeDirection);
   };
 
   return (
@@ -50,18 +45,6 @@ const Day = ({
         </p>
         <ReminderShortList rows={rows} reminders={dayReminders} />
       </div>
-      <AddReminderModal
-        modalRef={state.modalRef}
-        isOpen={state.isOpenModal}
-        selectedDay={day}
-        setIsOpen={functions.setIsOpenModal}
-        onChangeDirection={onChangeDirection}
-        // style={{
-        //   position: "absolute",
-        //   top: state.modalPosition?.top,
-        //   left: state.modalPosition?.left,
-        // }}
-      />
     </>
   );
 };

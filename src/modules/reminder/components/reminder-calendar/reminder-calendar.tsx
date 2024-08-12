@@ -1,4 +1,6 @@
 import { useCalendar } from "../../hooks/useCalendar";
+import { useCreateReminderModalStore } from "../../store/useCreateReminderModalStore";
+import { AddReminderModal } from "../add-reminder-modal";
 import { ReminderCalendarHeader } from "../reminder-calendar-header";
 import { ReminderCalendarMonth } from "../reminder-calendar-month";
 import { type ReminderCalendarProps } from "./types";
@@ -8,6 +10,8 @@ const ReminderCalendar = ({ isLoading, ...props }: ReminderCalendarProps) => {
     date: new Date(),
     numberOfWeekDays: 7,
   });
+
+  const { isOpen } = useCreateReminderModalStore();
 
   return (
     <div className="flex h-full flex-col gap-4" {...props}>
@@ -28,6 +32,7 @@ const ReminderCalendar = ({ isLoading, ...props }: ReminderCalendarProps) => {
         numberOfWeekDays={state.numberOfWeekDays}
         onChangeDirection={functions.onChangeDirection}
       />
+      {isOpen && <AddReminderModal />}
     </div>
   );
 };

@@ -10,7 +10,13 @@ import { parseDateTimeToDateTime } from "../utils/date";
 import { generateRandomId } from "../utils/random";
 import { createReminderSchema } from "../utils/validation";
 
-const useCreateReminder = (selectedDay: ReminderCalendarDate) => {
+const useCreateReminder = ({
+  selectedDay,
+  closeModal,
+}: {
+  selectedDay: ReminderCalendarDate;
+  closeModal: () => void;
+}) => {
   const { hours, minutes } = createDate(new Date());
   const form = useForm<ReminderFormData>({
     defaultValues: {
@@ -83,6 +89,8 @@ const useCreateReminder = (selectedDay: ReminderCalendarDate) => {
         position: "top-center",
         duration: 3000,
       });
+
+      closeModal();
     },
     onError: (_, __, context) => {
       const previousReminders = context;
