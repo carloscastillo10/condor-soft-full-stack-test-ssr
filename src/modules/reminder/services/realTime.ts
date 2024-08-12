@@ -4,11 +4,12 @@ import { type ReminderNotificationEvent } from "../types";
 const emitReminderNotificationEvent = async ({
   userId,
   reminderTitle,
+  reminderStart,
 }: ReminderNotificationEvent) => {
   await emit({
     channel: `user-${userId.toString()}`,
     event: "reminder-sent",
-    data: { reminderTitle },
+    data: { reminderTitle, reminderStart },
   });
 };
 

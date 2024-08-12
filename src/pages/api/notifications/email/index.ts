@@ -20,6 +20,7 @@ async function handlePost(req: NextApiRequest, res: NextApiResponse) {
       emitReminderNotificationEvent({
         userId: parseInt(user.id, 10),
         reminderTitle: title,
+        reminderStart: new Date(start),
       }),
     ]);
 

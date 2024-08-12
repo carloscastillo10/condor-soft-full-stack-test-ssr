@@ -86,6 +86,7 @@ export interface ReminderNotification
 export interface ReminderNotificationEvent {
   userId: number;
   reminderTitle: string;
+  reminderStart: Date;
 }
 
 export interface CreateReminderNotification {

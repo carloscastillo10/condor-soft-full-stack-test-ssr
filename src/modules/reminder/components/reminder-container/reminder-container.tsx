@@ -1,5 +1,8 @@
+import { format } from "date-fns";
 import { useSession } from "next-auth/react";
 import { useMemo } from "react";
+import { FaBell } from "react-icons/fa";
+import { toast } from "sonner";
 import { DropdownUser } from "~/modules/core/components/dropdown-user";
 import {
   Card,
@@ -9,6 +12,7 @@ import {
 } from "~/modules/core/components/ui/card";
 import { Skeleton } from "~/modules/core/components/ui/skeleton";
 import { useRealTime } from "~/modules/core/hooks/useRealTime";
+import { type ReminderNotificationEvent } from "../../types";
 import { ReminderCalendar } from "../reminder-calendar";
 import { type ReminderContainerProps } from "./types";
 
@@ -17,7 +21,15 @@ const ReminderContainer = ({ ...props }: ReminderContainerProps) => {
   const isLoading = useMemo(() => status === "loading", [status]);
 
   const onNotification = (data: unknown) => {
-    console.log("Enviando recordatorio ahora", data);
+    const { reminderStart } = data as ReminderNotificationEvent;
+
+    toast.message("Sending reminder now", {
+      className: "bg-black text-white border-black shadow-modal",
+      description: format(reminderStart, "EEEE, MMMM do 'at' h:mma"),
+      icon: <FaBell className="mr-4 h-4 w-4" />,
+      duration: 4000,
+      position: "bottom-left",
+    });
   };
 
   useRealTime({
