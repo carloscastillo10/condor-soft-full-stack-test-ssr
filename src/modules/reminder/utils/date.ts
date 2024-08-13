@@ -1,4 +1,4 @@
-import { parse } from "date-fns";
+import { format, parse } from "date-fns";
 
 const parseDateTimeToDateTime = (date: Date, time: string) =>
   parse(
@@ -7,4 +7,8 @@ const parseDateTimeToDateTime = (date: Date, time: string) =>
     new Date(),
   );
 
-export { parseDateTimeToDateTime };
+const formatDateToNotificationDate = (date: Date) => {
+  return format(date, "EEEE, MMMM do 'at' h:mma");
+};
+
+export { formatDateToNotificationDate, parseDateTimeToDateTime };

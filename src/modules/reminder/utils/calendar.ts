@@ -1,6 +1,6 @@
 import { type ReminderCalendarDate, type WeekDayName } from "../types";
 
-const createDate = (date: Date, locale: string): ReminderCalendarDate => {
+const createDate = (date: Date, locale = "en-US"): ReminderCalendarDate => {
   const seconds = date.getSeconds();
   const minutes = date.getMinutes();
   const hours = date.getHours();

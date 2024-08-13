@@ -1,5 +1,17 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-nocheck
 import { createEnv } from "@t3-oss/env-nextjs";
 import { z } from "zod";
+
+function createStringEnvValidator({ name, isUrl = false }) {
+  return z
+    .string()
+    .refine(
+      (str) => !str.includes(`YOUR_${name}_HERE`),
+      `You forgot to change the default ${name}`,
+    )
+    .pipe(isUrl ? z.string().url() : z.string());
+}
 
 export const env = createEnv({
   /**
@@ -7,38 +19,32 @@ export const env = createEnv({
    * isn't built with invalid env vars.
    */
   server: {
-    DATABASE_URL: z
-      .string()
-      .url()
-      .refine(
-        (str) => !str.includes("YOUR_POSTGRESQL_URL_HERE"),
-        "You forgot to change the default DATABASE_URL",
-      ),
-    NEXTAUTH_URL: z
-      .string()
-      .url()
-      .refine(
-        (str) => !str.includes("YOUR_NEXTAUTH_URL_HERE"),
-        "You forgot to change the default NEXTAUTH_URL",
-      ),
-    NEXTAUTH_SECRET: z
-      .string()
-      .refine(
-        (str) => !str.includes("YOUR_NEXTAUTH_SECRET_HERE"),
-        "You forgot to change the default NEXTAUTH_SECRET",
-      ),
-    GOOGLE_CLIENT_ID: z
-      .string()
-      .refine(
-        (str) => !str.includes("YOUR_GOOGLE_CLIENT_ID_HERE"),
-        "You forgot to change the default GOOGLE_CLIENT_ID",
-      ),
-    GOOGLE_CLIENT_SECRET: z
-      .string()
-      .refine(
-        (str) => !str.includes("YOUR_GOOGLE_CLIENT_SECRET_HERE"),
-        "You forgot to change the default GOOGLE_CLIENT_SECRET",
-      ),
+    DATABASE_URL: createStringEnvValidator({
+      name: "DATABASE_URL",
+      isUrl: true,
+    }),
+    NEXTAUTH_URL: createStringEnvValidator({
+      name: "NEXTAUTH_URL",
+      isUrl: true,
+    }),
+    NEXTAUTH_SECRET: createStringEnvValidator({ name: "NEXTAUTH_SECRET" }),
+    GOOGLE_CLIENT_ID: createStringEnvValidator({ name: "NEXTAUTH_SECRET" }),
+    GOOGLE_CLIENT_SECRET: createStringEnvValidator({ name: "NEXTAUTH_SECRET" }),
+    QSTASH_BASE_URL: createStringEnvValidator({
+      name: "QSTASH_BASE_URL",
+      isUrl: true,
+    }),
+    QSTASH_TOKEN: createStringEnvValidator({ name: "QSTASH_TOKEN" }),
+    PUSHER_APP_ID: createStringEnvValidator({ name: "PUSHER_APP_ID" }),
+    NEXT_PUBLIC_PUSHER_KEY: createStringEnvValidator({
+      name: "NEXT_PUBLIC_PUSHER_KEY",
+    }),
+    PUSHER_SECRET: createStringEnvValidator({ name: "PUSHER_SECRET" }),
+    NEXT_PUBLIC_PUSHER_CLUSTER: createStringEnvValidator({
+      name: "NEXT_PUBLIC_PUSHER_CLUSTER",
+    }),
+    EMAIL_USER: createStringEnvValidator({ name: "EMAIL_USER" }),
+    EMAIL_PASSWORD: createStringEnvValidator({ name: "EMAIL_PASSWORD" }),
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
@@ -63,6 +69,14 @@ export const env = createEnv({
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+    QSTASH_BASE_URL: process.env.QSTASH_BASE_URL,
+    QSTASH_TOKEN: process.env.QSTASH_TOKEN,
+    PUSHER_APP_ID: process.env.PUSHER_APP_ID,
+    NEXT_PUBLIC_PUSHER_KEY: process.env.NEXT_PUBLIC_PUSHER_KEY,
+    PUSHER_SECRET: process.env.PUSHER_SECRET,
+    NEXT_PUBLIC_PUSHER_CLUSTER: process.env.NEXT_PUBLIC_PUSHER_CLUSTER,
+    EMAIL_USER: process.env.EMAIL_USER,
+    EMAIL_PASSWORD: process.env.EMAIL_PASSWORD,
     NODE_ENV: process.env.NODE_ENV,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },

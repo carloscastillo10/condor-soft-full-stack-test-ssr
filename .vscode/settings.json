@@ -4,6 +4,8 @@
     "ci-cd",
     "auth",
     "reminder",
-    "database"
+    "database",
+    "scheduler",
+    "websockets"
   ]
 }

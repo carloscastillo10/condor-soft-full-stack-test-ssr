@@ -17,3 +17,7 @@ export function hexToRgba(hex: string, alpha: number) {
 
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
+
+export function convertToTwoDigitFormat(value: number) {
+  return value.toString().padStart(2, "0");
+}

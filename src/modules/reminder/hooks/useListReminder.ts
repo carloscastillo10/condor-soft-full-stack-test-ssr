@@ -1,5 +1,7 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
+import { useEffect, useRef } from "react";
+import { toast } from "sonner";
 import { type Reminder } from "~/modules/core/types";
 import { type ReminderCalendarDate } from "../types";
 
@@ -10,6 +12,8 @@ const useListReminder = ({
   from: ReminderCalendarDate;
   to: ReminderCalendarDate;
 }) => {
+  const toastIdRef = useRef<string | number | null>(null);
+
   const list = async () => {
     const startDate = format(from.date, "yyyy-MM-dd");
     const endDate = format(to.date, "yyyy-MM-dd");
@@ -38,6 +42,7 @@ const useListReminder = ({
   const {
     data: reminders,
     isLoading,
+    isFetching,
     error,
   } = useQuery<Reminder[]>({
     queryKey: ["reminders", from, to],
@@ -45,10 +50,22 @@ const useListReminder = ({
     placeholderData: keepPreviousData,
   });
 
+  useEffect(() => {
+    if ((isLoading || isFetching) && !toastIdRef.current) {
+      toastIdRef.current = toast.loading("Loading reminders", {
+        className: "bg-black text-white font-semibold",
+        position: "bottom-center",
+      });
+    } else if (!isLoading && !isFetching && toastIdRef.current) {
+      toast.dismiss(toastIdRef.current);
+      toastIdRef.current = null;
+    }
+  }, [isLoading, isFetching]);
+
   return {
     state: {
       reminders,
-      isLoading,
+      isLoading: isLoading || isFetching,
       error,
     },
   };

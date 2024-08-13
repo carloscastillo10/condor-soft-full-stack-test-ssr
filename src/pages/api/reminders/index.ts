@@ -1,6 +1,11 @@
 import { type NextApiRequest, type NextApiResponse } from "next";
 import { getToken, type JWT } from "next-auth/jwt";
-import { createReminder, listReminders } from "~/modules/reminder/services";
+import {
+  createReminder,
+  listReminders,
+  saveNotification,
+  scheduleReminder,
+} from "~/modules/reminder/services";
 import { type ReminderFormData } from "~/modules/reminder/types";
 
 async function handlePost(
@@ -15,6 +20,10 @@ async function handlePost(
       date: new Date(data.date),
       userId: parseInt(session.id as string, 10),
     });
+
+    // Schedule reminder in upstash
+    const { scheduleId } = await scheduleReminder(newReminder);
+    await saveNotification({ reminderId: newReminder.id, scheduleId });
 
     res.status(201).json(newReminder);
   } catch (error) {
@@ -73,6 +82,7 @@ export default async function handler(
 
   if (!handler) {
     res.setHeader("Allow", Object.keys(methodHandlers));
+
     return res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 

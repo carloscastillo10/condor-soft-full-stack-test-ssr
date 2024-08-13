@@ -10,9 +10,13 @@ body {
   font-family: var(--font-inter);
 }
 
-section {
+.section {
   --gutter-x: 2rem;
   --gutter-y: 3rem;
   padding: calc(var(--gutter-y) * 0.5) calc(var(--gutter-x) * 0.5);
   margin: auto;
+}
+
+.sonner-loading-bar {
+  background: white !important;
 }

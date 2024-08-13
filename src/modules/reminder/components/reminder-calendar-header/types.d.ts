@@ -6,6 +6,7 @@ import {
 export type ReminderCalendarHeaderProps = OmitNonHTMLAttributes<
   JSX.IntrinsicElements["header"]
 > & {
+  isLoading: boolean;
   selectedDay: ReminderCalendarDate;
   displayedDate: string;
   onChangeDirection: (
