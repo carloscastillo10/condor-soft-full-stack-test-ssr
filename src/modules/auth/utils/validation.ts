@@ -12,7 +12,10 @@ const email = z
 const password = z
   .string({ required_error: "Password is required." })
   .min(1, "Password is required.")
-  .transform(trimAndRemoveWhitespace);
+  .transform(trimAndRemoveWhitespace)
+  .refine((value) => value.length >= 6 && value.length <= 60, {
+    message: "The password must be between 6 and 60 characters.",
+  });
 
 const signInSchema = z.object({
   email,
