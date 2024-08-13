@@ -43,6 +43,8 @@ export const env = createEnv({
     NEXT_PUBLIC_PUSHER_CLUSTER: createStringEnvValidator({
       name: "NEXT_PUBLIC_PUSHER_CLUSTER",
     }),
+    EMAIL_USER: createStringEnvValidator({ name: "EMAIL_USER" }),
+    EMAIL_PASSWORD: createStringEnvValidator({ name: "EMAIL_PASSWORD" }),
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
@@ -73,6 +75,8 @@ export const env = createEnv({
     NEXT_PUBLIC_PUSHER_KEY: process.env.NEXT_PUBLIC_PUSHER_KEY,
     PUSHER_SECRET: process.env.PUSHER_SECRET,
     NEXT_PUBLIC_PUSHER_CLUSTER: process.env.NEXT_PUBLIC_PUSHER_CLUSTER,
+    EMAIL_USER: process.env.EMAIL_USER,
+    EMAIL_PASSWORD: process.env.EMAIL_PASSWORD,
     NODE_ENV: process.env.NODE_ENV,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },

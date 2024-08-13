@@ -1,4 +1,3 @@
-import { format } from "date-fns";
 import { useSession } from "next-auth/react";
 import { useMemo } from "react";
 import { FaBell } from "react-icons/fa";
@@ -13,6 +12,7 @@ import {
 import { Skeleton } from "~/modules/core/components/ui/skeleton";
 import { useRealTime } from "~/modules/core/hooks/useRealTime";
 import { type ReminderNotificationEvent } from "../../types";
+import { formatDateToNotificationDate } from "../../utils/date";
 import { ReminderCalendar } from "../reminder-calendar";
 import { type ReminderContainerProps } from "./types";
 
@@ -25,7 +25,7 @@ const ReminderContainer = ({ ...props }: ReminderContainerProps) => {
 
     toast.message("Sending reminder now", {
       className: "bg-black text-white border-black shadow-modal",
-      description: format(reminderStart, "EEEE, MMMM do 'at' h:mma"),
+      description: formatDateToNotificationDate(reminderStart),
       icon: <FaBell className="mr-4 h-4 w-4" />,
       duration: 5000,
       position: "bottom-left",

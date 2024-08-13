@@ -15,6 +15,7 @@ async function handlePost(req: NextApiRequest, res: NextApiResponse) {
       sendReminderEmailNotification({
         title,
         start: new Date(start),
+        name: user.name,
         email: user.email,
       }),
       emitReminderNotificationEvent({

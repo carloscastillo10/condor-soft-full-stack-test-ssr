@@ -1,4 +1,5 @@
 import { type BodyInit } from "@upstash/qstash";
+import { type Data } from "ejs";
 
 export interface User {
   id: string;
@@ -26,10 +27,10 @@ export interface Job {
 }
 
 export interface Email {
-  from: string;
   to: string[];
   subject: string;
-  template: JSX.Element;
+  templatePath: string;
+  data: Data;
 }
 
 export interface Trigger {

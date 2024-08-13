@@ -1,3 +1,4 @@
+import { sendEmail } from "~/modules/core/services";
 import {
   type Notification,
   type NotificationStatus,
@@ -9,13 +10,24 @@ import {
   type QueryNotification,
   type ReminderNotification,
 } from "../types";
+import { formatDateToNotificationDate } from "../utils/date";
 
 const sendReminderEmailNotification = async ({
   title,
   start,
+  name,
   email,
 }: ReminderNotification) => {
-  console.log("enviando notification por correo", title, start, email);
+  await sendEmail({
+    to: [email],
+    subject: "Reminder Notification",
+    templatePath: "src/modules/reminder/templates/reminder-template-email.ejs",
+    data: {
+      name,
+      title,
+      start: formatDateToNotificationDate(start),
+    },
+  });
   // await sendEmail({from: 'castillocarlos2407@gmail.com', subject: 'Reminder', to, template: <ReminderEmailNotification />})
 };
 

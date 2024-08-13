@@ -56,7 +56,7 @@ const useListReminder = ({
         className: "bg-black text-white font-semibold",
         position: "bottom-center",
       });
-    } else if (!isLoading && toastIdRef.current) {
+    } else if (!isLoading && !isFetching && toastIdRef.current) {
       toast.dismiss(toastIdRef.current);
       toastIdRef.current = null;
     }

@@ -1,5 +1,6 @@
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import {
   DropdownMenu,
@@ -15,6 +16,7 @@ const DropdownUser = ({ userName, isLoading, ...props }: DropDownUserProps) => {
 
   const onSignOut = async () => {
     await signOut({ redirect: false });
+    toast.dismiss();
     router.push("/auth/signin");
   };
 

@@ -81,7 +81,7 @@ export interface QueryReminder {
 
 export interface ReminderNotification
   extends Pick<Reminder, "title" | "start">,
-    Pick<User, "email"> {}
+    Pick<User, "name" | "email"> {}
 
 export interface ReminderNotificationEvent {
   userId: number;
