@@ -30,7 +30,7 @@ const AddReminderForm = ({
   ...props
 }: AddReminderFormProps) => {
   const {
-    state: { form, isLoading, error },
+    state: { form, isLoading },
     functions: { createReminder },
   } = useCreateReminder({
     selectedDay,
