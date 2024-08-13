@@ -34,7 +34,6 @@ const useListReminder = ({
 
     const reminders = (await response.json()) as Reminder[];
 
-    console.log(reminders);
     return reminders.map((reminder) => ({
       ...reminder,
       start: parseToUTCTimeZone(new Date(reminder.start)),
