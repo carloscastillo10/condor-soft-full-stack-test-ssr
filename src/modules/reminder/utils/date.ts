@@ -1,10 +1,15 @@
 import { format, toZonedTime } from "date-fns-tz";
 import moment from "moment-timezone";
 
-const timeZone = "UTC";
+const utcTimeZone = "UTC";
+const defaultTimeZone = "America/Guayaquil";
 
 const parseToUTCTimeZone = (date: Date) => {
-  return toZonedTime(date, timeZone);
+  return toZonedTime(date, utcTimeZone);
+};
+
+const parseToLocalTimeZone = (date: Date) => {
+  return moment(date).add(5, "hours").toDate();
 };
 
 const parseDateTimeToDateTime = (date: Date, time: string) => {
@@ -13,18 +18,19 @@ const parseDateTimeToDateTime = (date: Date, time: string) => {
   const parsedDate = moment.tz(
     `${dateString} ${time}`,
     "YYYY-MM-DD HH:mm",
-    timeZone,
+    utcTimeZone,
   );
 
   return parsedDate.toDate();
 };
 
 const formatDateToNotificationDate = (date: Date) => {
-  return format(date, "EEEE, MMMM do 'at' h:mma", { timeZone });
+  return format(date, "EEEE, MMMM do 'at' h:mma", { timeZone: utcTimeZone });
 };
 
 export {
   formatDateToNotificationDate,
   parseDateTimeToDateTime,
+  parseToLocalTimeZone,
   parseToUTCTimeZone,
 };

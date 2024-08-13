@@ -5,6 +5,7 @@ import {
   type UpdateNotification,
 } from "~/modules/core/types";
 import { db } from "~/server/db";
+import { reminderTemplateEmail } from "../templates/reminder-template-email";
 import {
   type CreateReminderNotification,
   type QueryNotification,
@@ -21,7 +22,7 @@ const sendReminderEmailNotification = async ({
   await sendEmail({
     to: [email],
     subject: "Reminder Notification",
-    templatePath: "src/modules/reminder/templates/reminder-template-email.ejs",
+    template: reminderTemplateEmail,
     data: {
       name,
       title,

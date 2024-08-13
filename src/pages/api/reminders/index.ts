@@ -7,6 +7,7 @@ import {
   scheduleReminder,
 } from "~/modules/reminder/services";
 import { type ReminderFormData } from "~/modules/reminder/types";
+import { parseToUTCTimeZone } from "~/modules/reminder/utils/date";
 
 async function handlePost(
   req: NextApiRequest,
@@ -17,7 +18,7 @@ async function handlePost(
     const data = req.body as ReminderFormData;
     const newReminder = await createReminder({
       ...data,
-      date: new Date(data.date),
+      date: parseToUTCTimeZone(new Date(data.date)),
       userId: parseInt(session.id as string, 10),
     });
 
