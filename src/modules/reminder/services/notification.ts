@@ -28,7 +28,6 @@ const sendReminderEmailNotification = async ({
       start: formatDateToNotificationDate(start),
     },
   });
-  // await sendEmail({from: 'castillocarlos2407@gmail.com', subject: 'Reminder', to, template: <ReminderEmailNotification />})
 };
 
 const saveNotification = async ({
