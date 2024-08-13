@@ -29,7 +29,7 @@ export interface Job {
 export interface Email {
   to: string[];
   subject: string;
-  templatePath: string;
+  template: string;
   data: Data;
 }
 
