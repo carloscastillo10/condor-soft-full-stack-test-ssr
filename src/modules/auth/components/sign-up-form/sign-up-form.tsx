@@ -1,4 +1,3 @@
-import { FcGoogle } from "react-icons/fc";
 import { LuLoader2 } from "react-icons/lu";
 import { AlertError } from "~/modules/core/components/alert-error";
 import { Button } from "~/modules/core/components/ui/button";
@@ -14,7 +13,6 @@ import { Input } from "~/modules/core/components/ui/input";
 import { cn } from "~/modules/core/lib/utils";
 import { useSignUp } from "../../hooks/useSignUp";
 import { type SignUpFormData } from "../../types";
-import styles from "./styles.module.css";
 import { type SignUpFormProps } from "./types";
 
 const SignUpForm = ({ ...props }: SignUpFormProps) => {
@@ -31,13 +29,13 @@ const SignUpForm = ({ ...props }: SignUpFormProps) => {
         onSubmit={form.handleSubmit(onSubmit)}
         {...props}
       >
-        <Button className="rounded-md" type="button" variant="outline">
+        {/* <Button className="rounded-md" type="button" variant="outline">
           <FcGoogle className="mr-2 h-6 w-6" />
           Sign up with Google
         </Button>
         <hr
           className={`${styles.divider} mb-2 mt-4 overflow-visible bg-primary-light text-center`}
-        />
+        /> */}
         {error && <AlertError errorMessage={error.message} />}
         <div className="grid grid-cols-2 gap-4">
           <FormField
