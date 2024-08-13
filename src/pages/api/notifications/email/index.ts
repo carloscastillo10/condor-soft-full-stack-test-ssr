@@ -7,21 +7,24 @@ import {
   sendReminderEmailNotification,
   updateNotification,
 } from "~/modules/reminder/services";
+import { parseToUTCTimeZone } from "~/modules/reminder/utils/date";
 
 async function handlePost(req: NextApiRequest, res: NextApiResponse) {
   try {
     const { id, title, start, user } = req.body as EmailNotificationRequestBody;
+    const reminderStart = parseToUTCTimeZone(new Date(start));
+
     await Promise.all([
       sendReminderEmailNotification({
         title,
-        start: new Date(start),
+        start: reminderStart,
         name: user.name,
         email: user.email,
       }),
       emitReminderNotificationEvent({
         userId: parseInt(user.id, 10),
         reminderTitle: title,
-        reminderStart: new Date(start),
+        reminderStart: reminderStart,
       }),
     ]);
 
@@ -36,6 +39,7 @@ async function handlePost(req: NextApiRequest, res: NextApiResponse) {
 
     res.status(201).json({ message: "Email sent." });
   } catch (error) {
+    console.log(error);
     const errorMessage =
       error instanceof Error ? error.message : "Something went wrong";
 
