@@ -5,24 +5,17 @@ import {
   DialogHeader,
   DialogTitle,
 } from "~/modules/core/components/ui/dialog";
+import { useCreateReminderModalStore } from "../../store/useCreateReminderModalStore";
 import { AddReminderForm } from "../add-reminder-form";
 import { type AddReminderModalProps } from "./types";
 
-const AddReminderModal = ({
-  modalRef,
-  isOpen,
-  selectedDay,
-  setIsOpen,
-  onChangeDirection,
-  ...props
-}: AddReminderModalProps) => {
+const AddReminderModal = ({ ...props }: AddReminderModalProps) => {
+  const { selectedDay, isOpen, onChangeDirection, closeModal } =
+    useCreateReminderModalStore();
+
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent
-        className="max-w-sm gap-3 rounded-md border border-primary-light bg-white p-4 shadow-modal"
-        ref={modalRef}
-        {...props}
-      >
+    <Dialog open={isOpen} onOpenChange={closeModal} {...props}>
+      <DialogContent className="max-w-sm gap-3 rounded-md border border-primary-light bg-white p-4 shadow-modal">
         <DialogHeader className="text-start">
           <DialogTitle className="text-xl font-semibold text-primary">
             New Event
@@ -34,6 +27,7 @@ const AddReminderModal = ({
         <AddReminderForm
           selectedDay={selectedDay}
           onChangeDirection={onChangeDirection}
+          closeModal={closeModal}
         />
       </DialogContent>
     </Dialog>

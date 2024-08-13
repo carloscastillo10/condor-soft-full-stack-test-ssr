@@ -16,10 +16,12 @@ const Month = ({
     from: daysOfMonth[0]!,
     to: daysOfMonth[daysOfMonth.length - 1]!,
   });
+
   const rows = useMemo(
     () => daysOfMonth.length / numberOfWeekDays,
     [daysOfMonth.length, numberOfWeekDays],
   );
+
   const weekDays = useMemo(
     () =>
       Array.from({ length: rows }).map((_, index) =>

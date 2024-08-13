@@ -1,3 +1,5 @@
 export type ReminderCalendarProps = OmitNonHTMLAttributes<
-  JSX.IntrinsicElements["div"]
+  JSX.IntrinsicElements["div"] & {
+    isLoading: boolean;
+  }
 >;

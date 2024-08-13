@@ -10,5 +10,6 @@ export type AddReminderFormProps = OmitNonHTMLAttributes<
       direction: ReminderCalendarDirection,
       customDate?: Date,
     ) => void;
+    closeModal: () => void;
   }
 >;

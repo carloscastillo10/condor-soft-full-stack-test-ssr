@@ -7,6 +7,7 @@ import {
 
 export type ReminderCalendarMonthProps = OmitNonHTMLAttributes<
   JSX.IntrinsicElements["div"] & {
+    isLoading: boolean;
     direction: ReminderCalendarDirection;
     selectedDay: ReminderCalendarDate;
     lastSelectedDay: ReminderCalendarDate;

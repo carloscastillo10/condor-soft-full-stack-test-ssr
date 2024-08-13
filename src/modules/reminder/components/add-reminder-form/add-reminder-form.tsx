@@ -18,13 +18,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "~/modules/core/components/ui/popover";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "~/modules/core/components/ui/select";
 import { cn } from "~/modules/core/lib/utils";
 import { useCreateReminder } from "../../hooks/useCreateReminder";
 import { type ReminderFormData } from "../../types";
@@ -33,12 +26,16 @@ import { type AddReminderFormProps } from "./types";
 const AddReminderForm = ({
   selectedDay,
   onChangeDirection,
+  closeModal,
   ...props
 }: AddReminderFormProps) => {
   const {
-    state: { form, isLoading, error },
+    state: { form, isLoading },
     functions: { createReminder },
-  } = useCreateReminder(selectedDay);
+  } = useCreateReminder({
+    selectedDay,
+    closeModal,
+  });
   const [isOpenPopover, setIsOpenPopover] = useState<boolean>(false);
 
   const onSelectDate = (day: Date) => {
@@ -114,8 +111,9 @@ const AddReminderForm = ({
                 <PopoverContent className="w-auto p-0" align="start">
                   <Calendar
                     mode="single"
-                    selected={selectedDay.date}
-                    defaultMonth={selectedDay.date}
+                    selected={field.value}
+                    defaultMonth={field.value}
+                    onSelect={field.onChange}
                     onDayClick={(day) => onSelectDate(day)}
                     initialFocus
                     classNames={{
@@ -137,28 +135,32 @@ const AddReminderForm = ({
           control={form.control}
           name="time"
           render={({ field }) => (
-            <FormItem className="flex w-full items-center justify-between gap-4 space-y-0">
-              <FormLabel
-                className={cn(
-                  form.formState.errors.time ? "text-red-500" : "text-primary",
-                  "text-base font-semibold",
-                )}
-              >
-                Time
-              </FormLabel>
-              <Select defaultValue={field.value} onValueChange={field.onChange}>
+            <FormItem>
+              <div className="flex w-full items-center justify-between gap-4 space-y-0">
+                <FormLabel
+                  className={cn(
+                    form.formState.errors.time
+                      ? "text-red-500"
+                      : "text-primary",
+                    "text-base font-semibold",
+                  )}
+                >
+                  Time
+                </FormLabel>
                 <FormControl>
-                  <SelectTrigger className="w-[240px]">
-                    <SelectValue>12:00</SelectValue>
-                  </SelectTrigger>
+                  <Input
+                    className={cn(
+                      form.formState.errors.time
+                        ? "border-red-500 focus-visible:ring-red-500"
+                        : "border-primary-light",
+                      "w-[240px] rounded-md border bg-white py-2 pl-3 pr-14 focus-visible:ring-offset-0",
+                    )}
+                    type="text"
+                    placeholder="00:00 AM"
+                    {...field}
+                  />
                 </FormControl>
-                <SelectContent>
-                  <SelectItem value="12:00">12:00</SelectItem>
-                  <SelectItem value="13:00">13:00</SelectItem>
-                  <SelectItem value="14:00">43:00</SelectItem>
-                </SelectContent>
-              </Select>
-
+              </div>
               <FormMessage />
             </FormItem>
           )}

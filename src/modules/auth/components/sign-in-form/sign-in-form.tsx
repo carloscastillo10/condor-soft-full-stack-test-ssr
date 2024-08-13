@@ -3,7 +3,6 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { FcGoogle } from "react-icons/fc";
 import { LuLoader2 } from "react-icons/lu";
 import { AlertError } from "~/modules/core/components/alert-error";
 import { Button } from "~/modules/core/components/ui/button";
@@ -18,7 +17,6 @@ import {
 import { Input } from "~/modules/core/components/ui/input";
 import { cn } from "~/modules/core/lib/utils";
 import { signInSchema } from "../../utils/validation";
-import styles from "./styles.module.css";
 import { type SignInFormData, type SignInFormProps } from "./types";
 
 const SignInForm = ({ ...props }: SignInFormProps) => {
@@ -63,7 +61,7 @@ const SignInForm = ({ ...props }: SignInFormProps) => {
         onSubmit={form.handleSubmit(onSubmit)}
         {...props}
       >
-        <Button
+        {/* <Button
           className="rounded-md"
           type="button"
           variant="outline"
@@ -74,7 +72,7 @@ const SignInForm = ({ ...props }: SignInFormProps) => {
         </Button>
         <hr
           className={`${styles.divider} mb-2 mt-4 overflow-visible bg-primary-light text-center`}
-        />
+        /> */}
         {error && <AlertError errorMessage={error} />}
         <FormField
           control={form.control}
