@@ -1,7 +1,7 @@
 import { format, parse } from "date-fns";
 import { toZonedTime } from "date-fns-tz";
 
-const timeZone = "America/Guayaquil";
+const timeZone = "UTC";
 
 const parseDateTimeToDateTime = (date: Date, time: string) => {
   const parsedDate = parse(
