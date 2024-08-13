@@ -13,14 +13,10 @@ const ReminderShortList = ({
     () => reminders.length > maxCountRemindersInDay,
     [reminders.length, maxCountRemindersInDay],
   );
-  const maxCountDayReminders = useMemo(
-    () =>
-      isShowMoreButton ? maxCountRemindersInDay - 1 : maxCountRemindersInDay,
-    [isShowMoreButton, maxCountRemindersInDay],
-  );
+
   const restCountReminders = useMemo(
-    () => (isShowMoreButton ? reminders.length - maxCountDayReminders : 0),
-    [reminders.length, isShowMoreButton, maxCountDayReminders],
+    () => (isShowMoreButton ? reminders.length - maxCountRemindersInDay : 0),
+    [isShowMoreButton, reminders.length, maxCountRemindersInDay],
   );
 
   return (
