@@ -10,6 +10,8 @@ const parseDateTimeToDateTime = (date: Date, time: string) => {
     new Date(),
   );
 
+  console.log(toZonedTime(parsedDate, timeZone));
+
   return toZonedTime(parsedDate, timeZone);
 };
 
