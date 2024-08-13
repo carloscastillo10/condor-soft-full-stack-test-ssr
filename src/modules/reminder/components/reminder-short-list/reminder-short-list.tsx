@@ -1,9 +1,10 @@
 import { useMemo } from "react";
-import { Button } from "~/modules/core/components/ui/button";
-import { ReminderShortItem } from "../reminder-short-item";
+import { ReminderItem } from "../reminder-item";
+import { ReminderLargeList } from "../reminder-large-list";
 import { type ReminderShortListProps } from "./types";
 
 const ReminderShortList = ({
+  day,
   reminders,
   rows,
   ...props
@@ -23,13 +24,15 @@ const ReminderShortList = ({
     <div className="flex flex-col gap-1" {...props}>
       <ul className="flex h-max w-full flex-col gap-1 overflow-hidden">
         {reminders.slice(0, maxCountRemindersInDay).map((reminder) => (
-          <ReminderShortItem key={reminder.id} reminder={reminder} />
+          <ReminderItem key={reminder.id} reminder={reminder} />
         ))}
       </ul>
       {isShowMoreButton && (
-        <Button className="h-max justify-start overflow-hidden text-ellipsis text-nowrap bg-transparent px-1 py-0.5 text-xs font-semibold text-primary hover:bg-primary-light">
-          {`${restCountReminders} more`}
-        </Button>
+        <ReminderLargeList
+          day={day}
+          restCountReminders={restCountReminders}
+          reminders={reminders}
+        />
       )}
     </div>
   );

@@ -43,7 +43,7 @@ const Day = ({
         >
           {day.dayNumber}
         </p>
-        <ReminderShortList rows={rows} reminders={dayReminders} />
+        <ReminderShortList day={day} rows={rows} reminders={dayReminders} />
       </div>
     </>
   );
