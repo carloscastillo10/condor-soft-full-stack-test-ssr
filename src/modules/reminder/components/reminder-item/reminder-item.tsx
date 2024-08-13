@@ -10,7 +10,6 @@ import { formatDateToNotificationDate } from "../../utils/date";
 import { type ReminderItemProps } from "./types";
 
 const ReminderItem = ({ reminder, ...props }: ReminderItemProps) => {
-  console.log(reminder);
   return (
     <Popover {...props}>
       <PopoverTrigger

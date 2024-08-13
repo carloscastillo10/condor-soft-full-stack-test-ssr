@@ -3,7 +3,7 @@ import { format, toZonedTime } from "date-fns-tz";
 
 const timeZone = "UTC";
 
-const parseToUTClTimeZone = (date: Date) => {
+const parseToUTCTimeZone = (date: Date) => {
   return toZonedTime(date, timeZone);
 };
 
@@ -14,7 +14,7 @@ const parseDateTimeToDateTime = (date: Date, time: string) => {
     new Date(),
   );
 
-  return parseToUTClTimeZone(parsedDate);
+  return parseToUTCTimeZone(parsedDate);
 };
 
 const formatDateToNotificationDate = (date: Date) => {
@@ -24,5 +24,5 @@ const formatDateToNotificationDate = (date: Date) => {
 export {
   formatDateToNotificationDate,
   parseDateTimeToDateTime,
-  parseToUTClTimeZone,
+  parseToUTCTimeZone,
 };

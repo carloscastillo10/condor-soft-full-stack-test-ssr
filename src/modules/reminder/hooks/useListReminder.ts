@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { toast } from "sonner";
 import { type Reminder } from "~/modules/core/types";
 import { type ReminderCalendarDate } from "../types";
+import { parseToUTCTimeZone } from "../utils/date";
 
 const useListReminder = ({
   from,
@@ -35,7 +36,7 @@ const useListReminder = ({
 
     return reminders.map((reminder) => ({
       ...reminder,
-      start: new Date(reminder.start),
+      start: parseToUTCTimeZone(new Date(reminder.start)),
     }));
   };
 
