@@ -1,7 +1,11 @@
-import { format, parse } from "date-fns";
-import { toZonedTime } from "date-fns-tz";
+import { parse } from "date-fns";
+import { format, toZonedTime } from "date-fns-tz";
 
 const timeZone = "UTC";
+
+const parseToUTClTimeZone = (date: Date) => {
+  return toZonedTime(date, timeZone);
+};
 
 const parseDateTimeToDateTime = (date: Date, time: string) => {
   const parsedDate = parse(
@@ -10,13 +14,15 @@ const parseDateTimeToDateTime = (date: Date, time: string) => {
     new Date(),
   );
 
-  console.log(toZonedTime(parsedDate, timeZone));
-
-  return toZonedTime(parsedDate, timeZone);
+  return parseToUTClTimeZone(parsedDate);
 };
 
 const formatDateToNotificationDate = (date: Date) => {
-  return format(date, "EEEE, MMMM do 'at' h:mma");
+  return format(date, "EEEE, MMMM do 'at' h:mma", { timeZone });
 };
 
-export { formatDateToNotificationDate, parseDateTimeToDateTime };
+export {
+  formatDateToNotificationDate,
+  parseDateTimeToDateTime,
+  parseToUTClTimeZone,
+};
