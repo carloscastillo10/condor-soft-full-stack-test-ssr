@@ -1,5 +1,5 @@
 import { parse } from "date-fns";
-import { format, toZonedTime } from "date-fns-tz";
+import { format, fromZonedTime, toZonedTime } from "date-fns-tz";
 
 const timeZone = "UTC";
 
@@ -8,13 +8,15 @@ const parseToUTCTimeZone = (date: Date) => {
 };
 
 const parseDateTimeToDateTime = (date: Date, time: string) => {
+  const dateString = date.toISOString().split("T")[0];
+
   const parsedDate = parse(
-    `${date.toISOString().split("T")[0]} ${time}:00`,
+    `${dateString} ${time}:00`,
     "yyyy-MM-dd HH:mm:ss",
     new Date(),
   );
 
-  return parseToUTCTimeZone(parsedDate);
+  return fromZonedTime(toZonedTime(parsedDate, "America/Guayaquil"), timeZone);
 };
 
 const formatDateToNotificationDate = (date: Date) => {

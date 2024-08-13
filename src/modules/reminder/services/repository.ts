@@ -1,11 +1,12 @@
 import { type Reminder } from "~/modules/core/types";
 import { db } from "~/server/db";
 import { type CreateReminder, type QueryReminder } from "../types";
-import { parseDateTimeToDateTime, parseToUTCTimeZone } from "../utils/date";
+import { parseDateTimeToDateTime } from "../utils/date";
 
 const createReminder = async (data: CreateReminder): Promise<Reminder> => {
   const { title, date, time, color, userId } = data;
   const start = parseDateTimeToDateTime(date, time);
+  console.log("startDate:", start);
 
   const newReminder = await db.reminder.create({
     data: {
@@ -51,7 +52,7 @@ const listReminders = async (query: QueryReminder): Promise<Reminder[]> => {
   return reminders.map(({ id, title, start, color, user }) => ({
     id,
     title,
-    start: parseToUTCTimeZone(new Date(`${start.toString()}`)),
+    start,
     color,
     user: { ...user, id: user.id.toString() },
   }));
