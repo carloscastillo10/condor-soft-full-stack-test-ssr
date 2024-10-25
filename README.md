@@ -61,11 +61,11 @@ pnpm run dev
 DATABASE_URL=postgresql://user:password@host:5432/database_name
 
 # NextAuth set up
-NEXTAUTH_URL=your_next_auth_url // local or production app url
+NEXTAUTH_URL=your_next_auth_url # local or production app url
 NEXTAUTH_SECRET=your_nextauth_secret_key
 
 # Upstash set up
-QSTASH_BASE_URL=your_qstash_base_url // ngrok tunnel url or production url
+QSTASH_BASE_URL=your_qstash_base_url # ngrok tunnel url or production url
 QSTASH_TOKEN=your_upstash_token
 
 # Pusher set up
