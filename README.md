@@ -39,7 +39,7 @@ pnpm run db:push
 - Add the `NEXTAUTH_URL` and `NEXTAUTH_SECRET` environment variables to the `.env` file.
 
 ### 🗄️ Upstash set up
-- Set up Upstash by following the instructions in the *`schedules`* section of [Upstash] [Upstash](https://upstash.com/docs/qstash/features/schedules).
+- Set up Upstash by following the instructions in the *`schedules`* section of [Upstash](https://upstash.com/docs/qstash/features/schedules).
 - Add the `QSTASH_BASE_URL` and `QSTASH_TOKEN` environment variables to the `.env` file.
 
 ### 🔃 Pusher set up
@@ -127,4 +127,4 @@ EMAIL_PASSWORD=your_email_password
 
 ## 🎨 Design
 
-The design is based on the schematics provided in Figma. You can find the designs at this link: [Prueba - CondorSoft](https://www.figma.com/design/EZLhCjYcr4vDxSE3mpZVr6/Technical-Test?node-id=0-1&t=eMK8tASYXG55hbX9-0).
+The design is based on the schematics provided in Figma. You can find the designs at this link: [Test - CondorSoft](https://www.figma.com/design/EZLhCjYcr4vDxSE3mpZVr6/Technical-Test?node-id=0-1&t=eMK8tASYXG55hbX9-0).
